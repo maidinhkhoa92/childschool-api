@@ -1,0 +1,16 @@
+{
+  "database": {
+    "host": "cluster0-shard-00-00-0mjj1.mongodb.net",
+    "port": 27017,
+    "db": "childschool",
+    "username": "childschool",
+    "password": "YbsBGKftwKpciEEJ"
+  },
+  "mail": {
+    "service": "gmail",
+    "auth": {
+      "user": "maihungkhoa@gmail.com",
+      "pass": "thinkingabout10/1992"
+    }
+  }
+}

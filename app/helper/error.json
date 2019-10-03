@@ -1,0 +1,44 @@
+{
+  "0": {
+    "msg": "Lỗi không xác định",
+    "method": "badRequest"
+  },
+  "1": "Tài khoản đã tồn tại",
+  "2": "Email đã tồn tại",
+  "3": {
+    "msg": "Tài khoản này đã update Số điện thoại",
+    "method": "badRequest"
+  },
+  "4": {
+    "msg": "Password and Confirm password don't match",
+    "method": "unauthorized"
+  },
+  "5": {
+    "msg": "This account is actived.",
+    "method": "unauthorized"
+  },
+  "6": {
+    "msg": "This account is not actived.",
+    "method": "unauthorized"
+  },
+  "7": {
+    "msg": "Digit is incorrect",
+    "method": "unauthorized"
+  },
+  "9997": {
+    "msg": "Không có token",
+    "method": "unauthorized"
+  },
+  "9998": {
+    "msg": "Token không hợp lệ",
+    "method": "unauthorized"
+  },
+  "9999": {
+    "msg": "Tên đăng nhập hoặc mật khẩu không chính xác",
+    "method": "unauthorized"
+  },
+  "10000": {
+    "msg": "No data",
+    "method": "notFound"
+  }
+}

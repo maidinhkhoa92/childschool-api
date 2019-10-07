@@ -25,6 +25,10 @@
     "msg": "Digit is incorrect",
     "method": "unauthorized"
   },
+  "8": {
+    "msg": "Account does not exist",
+    "method": "badRequest"
+  },
   "9997": {
     "msg": "Không có token",
     "method": "unauthorized"

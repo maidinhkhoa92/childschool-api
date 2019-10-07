@@ -8,7 +8,7 @@ module.exports.list = {
 	handler: (req, res) => {
         const { id } = req.decoded;
 		
-		classes.list(id).then(Data => {
+		classes.list(null, null, id).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
 			error(res.boom, err);

@@ -6,7 +6,7 @@ module.exports.updatePassword = {
   Validate: validate.updatePassword,
   handler: (req, res) => {
     const { email, password, confirm } = req.body;
-
+    
     user
       .updatePassword(email, password, confirm)
       .then(User => {

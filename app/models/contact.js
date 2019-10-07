@@ -16,6 +16,10 @@ const schema = new Schema({
 		required: true,
 		default: 'family',
 	},
+	registed: {
+		type: Boolean,
+		default: false
+	}
 })
 
 schema.plugin(timestamp, {

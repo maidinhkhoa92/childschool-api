@@ -3,6 +3,8 @@
 const user = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const transporter = require('../config/nodemailer');
+const parameters = require('../config/parameters.json');
 const _ = require('lodash');
 
 const create = (body, directorId) => {
@@ -13,8 +15,22 @@ const create = (body, directorId) => {
     user.create(body, function(err, data) {
       if (err) {
         reject(err);
+        return;
       } 
-      resolve(convertData(data));
+      const mailOptions = {
+        from: 'admin@gmail.com',
+        to: data.email,
+        subject: 'Your new account',
+        text: "Your link: " + parameters.registerWebAppUrl
+      };
+      transporter.sendMail(mailOptions, function(error, info){
+        if (err) {
+          reject(error);
+          return;
+        } 
+
+        resolve(convertData(data));
+      })
     });
   });
 };
@@ -23,14 +39,22 @@ const updatePassword = (email, password, confirm) => {
   return new Promise((resolve, reject) => {
     if (password !== confirm) {
       reject({ code: 4 });
+      return;
     }
     user.findOne({ email: email }, function(err, User) {
       if (err) {
         reject(err);
+        return;
+      }
+
+      if (User === null || User === undefined) {
+        reject({ code: 8 });
+        return;
       }
 
       if (User.active !== "New") {
         reject({ code: 5 });
+        return;
       }
 
       User.password = bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
@@ -47,22 +71,32 @@ const login = (email, password) => {
       .findOne({ email: email }, function(error, User) {
         if (error) {
           reject(error);
+          return
+        }
+
+        if (User === null || User === undefined) {
+          reject({ code: 8 });
+          return;
         }
 
         if (User.active === "New") {
           reject({ code: 6 });
+          return
         }
 
         if (User.status === false) {
           reject({ code: 6 });
+          return
         }
 
         bcrypt.compare(password, User.password, (err, resonse) => {
           if (err) {
             reject(err);
+            return
           }
           if (!resonse) {
             reject({ code: 9999 });
+            return
           }
 
           delete User.password;
@@ -86,10 +120,17 @@ const updateDigit = (id, digit) => {
     user.findById(id, function(error, User) {
       if (error) {
         reject(error);
+        return;
+      }
+
+      if (User === null || User === undefined) {
+        reject({ code: 8 });
+        return;
       }
 
       if (User.active !== "Pass confirmed") {
         reject({ code: 5 });
+        return;
       }
 
       User.digit = digit;
@@ -105,14 +146,22 @@ const compareDigit = (id, digit) => {
     user.findById(id, function(error, User) {
       if (error) {
         reject(error);
+        return;
+      }
+
+      if (User === null || User === undefined) {
+        reject({ code: 8 });
+        return;
       }
 
       if (User.active !== "Digit confirmed") {
         reject({ code: 5 });
+        return;
       }
 
       if (JSON.stringify(digit) !== JSON.stringify(User.digit)) {
         reject({ code: 7 });
+        return;
       }
 
       resolve(convertData(User));

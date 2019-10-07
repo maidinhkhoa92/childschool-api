@@ -12,5 +12,6 @@
       "user": "maihungkhoa@gmail.com",
       "pass": "thinkingabout10/1992"
     }
-  }
+  },
+  "registerWebAppUrl": "https://childschool-webapp.firebaseapp.com/register"
 }

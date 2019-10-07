@@ -15,9 +15,9 @@ router.post('/user', Token, validate(user.create.Validate), user.create.handler)
 router.get('/user', Token, user.list.handler);
 router.post('/login', validate(user.login.Validate), user.login.handler);
 router.put('/user/:id', Token, validate(user.update.Validate), user.update.handler);
-router.patch('/user/:id', Token, validate(user.deactive.Validate), user.deactive.handler);
 router.patch('/user/update-password', validate(user.updatePassword.Validate), user.updatePassword.handler);
 router.patch('/user/update-digit', Token, validate(user.updateDigit.Validate), user.updateDigit.handler);
+router.patch('/user/:id', Token, validate(user.deactive.Validate), user.deactive.handler);
 router.post('/user/compare-digit', Token, validate(user.compareDigit.Validate), user.compareDigit.handler);
 
 // child

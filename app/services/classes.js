@@ -1,6 +1,7 @@
 'use strict';
 
 const classes = require('../models/classes');
+const child = require('../models/child');
 const colors = require('../helper/colors');
 const _ = require('lodash');
 
@@ -115,20 +116,27 @@ const addClass = (id, childId) => {
   return new Promise((resolve, reject) => {
     classes.findById(id, function (err, Classes) {
       if(err) {
-        reject(err)
+        reject(err);
+        return;
       }
-      var child = Classes.child;
-      child.push(childId);
-      Classes.child = child;
+      var child_classes = Classes.child;
+      child_classes.push(childId);
+      Classes.child = child_classes;
       Classes.save();
-      
-      classes.findById(id).populate('child').exec( function (error, result) {
-        if(error) {
-          reject(error)
+      child.findById(childId, function (e, Child) {
+        if(e) {
+          reject(e);
+          return;
         }
-        resolve(convertData(result));
+        Child.classes = id;
+        Child.save();
+        Classes.populate('child', function (error, result) {
+          if(error) {
+            reject(error)
+          }
+          resolve(convertData(result));
+        })
       })
-      
     })
   });
 }

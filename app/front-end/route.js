@@ -25,6 +25,7 @@ const child = require('./controller/child')
 
 router.get('/child/:id', Token, child.detail.handler);
 router.put('/child/:id', Token, validate(child.update.Validate), child.update.handler);
+router.patch('/child', Token, validate(child.updateNews.Validate), child.updateNews.handler);
 
 // note
 const note = require('./controller/note');
@@ -43,6 +44,11 @@ router.get('/classes/:id', Token, classes.detail.handler);
 router.get('/classes', Token, classes.list.handler);
 router.delete('/classes/:id', Token, validate(classes.removeClass.Validate), classes.removeClass.handler);
 
+// classes
+const staff = require('./controller/staff');
+
+router.get('/staff', Token, staff.list.handler);
+
 // menu 
 const menu = require('./controller/menu');
 
@@ -52,5 +58,8 @@ router.get('/menu', Token, menu.list.handler);
 //upload router
 const upload = require('./controller/upload');
 router.post('/upload', Token, upload);
+
+const uploadMenu = require('./controller/uploadMenu');
+router.post('/upload-menu', Token, uploadMenu);
 
 module.exports = router;

@@ -27,3 +27,16 @@ module.exports.update = {
 		});
 	}
 };
+
+module.exports.updateNews = {
+	Validate: validate.updateNews,
+	handler: (req, res) => {
+		const {ids, news} = req.body
+		
+		child.updateNews(news, ids).then(Data => {
+			res.status(200).send(Data);
+		}).catch(err => {
+			error(res.boom, err);
+		});
+	}
+};

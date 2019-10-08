@@ -53,9 +53,9 @@ module.exports.addClass = {
 		}
 
 		Promise.all([
-			user.findByEmailAndCreate(params1), 
-			user.findByEmailAndCreate(params2), 
-			user.findByEmailAndCreate(params3)
+			user.findByEmailAndCreate(params1, user_id), 
+			user.findByEmailAndCreate(params2, user_id), 
+			user.findByEmailAndCreate(params3, user_id)
 		])
 		.then(data => {
 			const params = {

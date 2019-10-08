@@ -9,19 +9,15 @@ const schema = new Schema({
     secondTeacher: { type: Schema.Types.ObjectId, ref: 'user' },
 	family: { type: Schema.Types.ObjectId, ref: 'user' },
 	directorId: { type: Schema.Types.ObjectId, ref: 'user' },
-	news: [
-		{
-			title: String,
-			note: [String],
-			type: {
-				type: String,
-				enum: ['text', 'video', 'image'],
-				default: 'text',
-			},
-			content: String,
-		}
-	]
+	classes: { type: Schema.Types.ObjectId, ref: 'classes' },
+	news: [{ type: Schema.Types.ObjectId, ref: 'new' }],
 })
+
+schema.virtual('id').get(function(){
+	return this._id.toHexString();
+});
+  
+schema.set('toObject', { virtuals: true })
 
 schema.plugin(timestamp, {
 	createdName: 'created_at',

@@ -1,6 +1,7 @@
 "use strict";
 
 const child = require("../models/child");
+const news = require("./news");
 const _ = require("lodash");
 
 const list = (paged, limit) => {
@@ -68,11 +69,40 @@ const update = (id, profile) => {
 
 const detail = (id) => {
   return new Promise((resolve, reject) => {
-    child.findById(id, function (err, data) {
+    child.findOne({_id: id}).populate('news').exec(function (err, data) {
       if (err) {
         reject(err);
       }
       resolve(convertData(data));
+    });
+  })
+}
+
+const updateNews = (body, ids_child) => {
+  return new Promise((resolve, reject) => {
+    child.find().where('_id').in(ids_child).exec((error, Childs) => {
+      if(error) {
+        reject(error);
+        return;
+      }
+      if(Childs.length === 0){
+        reject({code: 10000})
+        return;
+      }
+      news.create(body).then(async data =>{
+        const news_id = data.id;
+        const new_childs = await _.map(Childs, item => {
+          let pre_news = item.news;
+          let result = {};
+          pre_news.push(news_id);
+          item.news = pre_news;
+          item.save();
+          return convertData(item);
+        })
+        resolve(new_childs);
+      }).catch(err => {
+        reject(err)
+      })
     });
   })
 }
@@ -95,5 +125,6 @@ module.exports = {
     create,
     list,
     detail,
-    update
+    update,
+    updateNews
 }

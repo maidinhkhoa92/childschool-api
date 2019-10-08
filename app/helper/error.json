@@ -3,10 +3,10 @@
     "msg": "Lỗi không xác định",
     "method": "badRequest"
   },
-  "1": "Tài khoản đã tồn tại",
-  "2": "Email đã tồn tại",
+  "1": "Account exist",
+  "2": "Email exist",
   "3": {
-    "msg": "Tài khoản này đã update Số điện thoại",
+    "msg": "Your phone number is updated",
     "method": "badRequest"
   },
   "4": {
@@ -30,15 +30,15 @@
     "method": "badRequest"
   },
   "9997": {
-    "msg": "Không có token",
+    "msg": "No token",
     "method": "unauthorized"
   },
   "9998": {
-    "msg": "Token không hợp lệ",
+    "msg": "Token is not valid",
     "method": "unauthorized"
   },
   "9999": {
-    "msg": "Tên đăng nhập hoặc mật khẩu không chính xác",
+    "msg": "Username or password is incorrect",
     "method": "unauthorized"
   },
   "10000": {

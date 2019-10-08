@@ -4,8 +4,8 @@ const parametes = require('../../config/parameters.json');
 
 const imageFilter = function (req, file, cb) {
   // accept image only
-  if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
-    return cb(new Error('Only image files are allowed!'), false);
+  if (!file.originalname.match(/\.(pdf)$/)) {
+    return cb(new Error('Only PDF files are allowed!'), false);
   }
   if (file.size > 1000000) {
     return cb(new Error('Size : 1mb'), false);
@@ -18,7 +18,7 @@ module.exports = function (req, res) {
   const current = moment(new Date()).format("DD-MM-YYYY-h:mm:ss-a");
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'uploads/images');
+      cb(null, 'uploads/menu');
     },
     filename: function (req, file, cb) {
       const name = file.originalname.replace(/\s+/g, '-').toLowerCase();

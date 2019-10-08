@@ -28,6 +28,11 @@ const schema = new Schema({
 		required: true,
 		default: true,
 	},
+	completed: {
+		type: Boolean,
+		required: true,
+		default: false,
+	},
 })
 
 schema.plugin(timestamp, {

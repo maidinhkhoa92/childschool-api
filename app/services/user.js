@@ -245,13 +245,15 @@ const remove = id => {
   });
 };
 
-const findByEmailAndCreate = body => {
+const findByEmailAndCreate = (body, directorId = null) => {
   return new Promise((resolve, reject) => {
     user.findOne({email: body.email}, function(err, data) {
       if(err){
         reject(err)
+        return;
       }
       if(data === null) {
+        body.directorId = directorId;
         create(body).then(item => {
           resolve(item)
         })
@@ -262,11 +264,15 @@ const findByEmailAndCreate = body => {
   })
 }
 
-const center = (id) => {
+const center = (id, type = null) => {
   return new Promise((resolve, reject) => {
     var query = user.find();
 
     query = query.where('directorId').equals(id);
+
+    if(type !== null) {
+      query = query.where('typeOfUser').equals(type);
+    }
 
     query.exec(function (err, data) {
       if (err) {

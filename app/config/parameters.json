@@ -13,5 +13,6 @@
       "pass": "thinkingabout10/1992"
     }
   },
-  "registerWebAppUrl": "https://childschool-webapp.firebaseapp.com/register"
+  "registerWebAppUrl": "https://childschool-webapp.firebaseapp.com/register",
+  "uploadUrl": "http://127.0.0.1:8081/"
 }

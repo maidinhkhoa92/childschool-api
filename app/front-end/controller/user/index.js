@@ -73,7 +73,7 @@ module.exports.update = {
   handler: (req, res) => {
     const { body } = req;
     const { id } = req.params;
-
+    body.completed = true;
     user
       .update(id, body)
       .then(User => {

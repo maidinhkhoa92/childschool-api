@@ -6,7 +6,9 @@ const schema = new Schema({
 	name: String,
 	color: String,
 	child: [{ type: Schema.Types.ObjectId, ref: 'child' }],
-	directorId: { type: Schema.Types.ObjectId, ref: 'user' }
+	directorId: { type: Schema.Types.ObjectId, ref: 'user' },
+	teacher: [{ type: Schema.Types.ObjectId, ref: 'user' }],
+	family: [{ type: Schema.Types.ObjectId, ref: 'user' }]
 })
 
 schema.plugin(timestamp, {

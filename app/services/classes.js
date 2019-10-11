@@ -112,7 +112,7 @@ const remove = (id) => {
   })
 }
 
-const addClass = (id, childId) => {
+const addClass = (id, childId, teacher_id_1, teacher_id_2, family_id) => {
   return new Promise((resolve, reject) => {
     classes.findById(id, function (err, Classes) {
       if(err) {
@@ -122,6 +122,18 @@ const addClass = (id, childId) => {
       var child_classes = Classes.child;
       child_classes.push(childId);
       Classes.child = child_classes;
+
+      // check if teacher or family exist
+      if(!_.includes(Classes.teacher, teacher_id_1)) {
+        Classes.teacher.push(teacher_id_1)
+      }
+      if(!_.includes(Classes.teacher, teacher_id_2)) {
+        Classes.teacher.push(teacher_id_2)
+      }
+      if(!_.includes(Classes.teacher, family_id)) {
+        Classes.family.push(teacher_id_1)
+      }
+
       Classes.save();
       child.findById(childId, function (e, Child) {
         if(e) {

@@ -66,7 +66,7 @@ module.exports.addClass = {
 				directorId: user_id
 			}
 			child.create(params).then(Child => {
-				classes.addClass(id, Child.id).then(Classes => {
+				classes.addClass(id, Child.id, data[0].id, data[1].id, data[2].id).then(Classes => {
 					res.status(200).send(Classes);
 				}).catch(e =>{
 					console.log(e)

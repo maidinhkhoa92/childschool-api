@@ -13,6 +13,12 @@
       "pass": "thinkingabout10/1992"
     }
   },
+  "firebase": {
+    "apiKey": "AIzaSyDNzZis7J30BJSm479iLYAvDKh_co4EFOs",
+    "authDomain": "https://accounts.google.com/o/oauth2/auth",
+    "databaseURL": "https://childschool-webapp.firebaseio.com",
+    "projectId": "childschool-webapp"
+  },
   "registerWebAppUrl": "https://childschool-webapp.firebaseapp.com/register",
   "uploadUrl": "http://127.0.0.1:8081/"
 }

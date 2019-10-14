@@ -277,9 +277,11 @@ const center = (id, type = null) => {
     query.exec(function (err, data) {
       if (err) {
         reject(err);
+        return;
       }
       if(data === null) {
         reject({code: 10000})
+        return;
       }
 
       const result = {

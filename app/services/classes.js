@@ -89,7 +89,19 @@ const detail = (id, userId) => {
       query = query.where('directorId').equals(userId);
     }
 
-    query.populate('child').exec(function(err, data) {
+    query.populate([
+      {
+        path: 'child',
+      },
+      {
+        path: 'family',
+        select: '-password'
+      },
+      {
+        path: 'teacher',
+        select: '-password'
+      }
+    ]).exec(function(err, data) {
       if (err) {
         reject(err);
       }
@@ -119,19 +131,31 @@ const addClass = (id, childId, teacher_id_1, teacher_id_2, family_id) => {
         reject(err);
         return;
       }
-      var child_classes = Classes.child;
+
+      if(Classes === null) {
+        reject({code: 10000})
+        return;
+      }
+
+      let child_classes = Classes.child;
+      let teacher_classes = Classes.teacher;
+      let family_classes = Classes.family;
       child_classes.push(childId);
+      
       Classes.child = child_classes;
 
       // check if teacher or family exist
       if(!_.includes(Classes.teacher, teacher_id_1)) {
-        Classes.teacher.push(teacher_id_1)
+        teacher_classes.push(teacher_id_1)
+        Classes.teacher = teacher_classes
       }
       if(!_.includes(Classes.teacher, teacher_id_2)) {
-        Classes.teacher.push(teacher_id_2)
+        teacher_classes.push(teacher_id_2)
+        Classes.teacher = teacher_classes
       }
       if(!_.includes(Classes.teacher, family_id)) {
-        Classes.family.push(teacher_id_1)
+        family_classes.push(family_id)
+        Classes.family = family_classes
       }
 
       Classes.save();

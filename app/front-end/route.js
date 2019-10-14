@@ -55,6 +55,11 @@ const menu = require('./controller/menu');
 router.post('/menu', Token, validate(menu.create.Validate), menu.create.handler);
 router.get('/menu', Token, menu.list.handler);
 
+// message
+const message = require('./controller/message');
+
+router.post('/message', Token, validate(message.create.Validate), message.create.handler);
+
 //upload router
 const upload = require('./controller/upload');
 router.post('/upload', Token, upload);

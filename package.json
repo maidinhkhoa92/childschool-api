@@ -20,6 +20,7 @@
     "express-formidable": "^1.0.0",
     "express-session": "^1.15.6",
     "express-validation": "^1.0.2",
+    "firebase": "^7.2.0",
     "joi": "^13.0.2",
     "jsonwebtoken": "^8.1.0",
     "lodash": "^4.17.15",

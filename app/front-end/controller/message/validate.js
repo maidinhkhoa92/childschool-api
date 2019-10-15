@@ -5,7 +5,7 @@ module.exports = {
     body: {
       message: Joi.string().required(),
       from_user: Joi.object().required(),
-      to_user: Joi.array().items(Joi.string()).required(),
+      to_user: Joi.array().items(Joi.object()).required(),
     }
   }
 }

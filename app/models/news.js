@@ -4,6 +4,9 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema({
   title: String,
+  time: Date,
+  group: String,
+  selected: [String],
   note: [String],
   type: {
     type: String,
@@ -19,7 +22,7 @@ const schema = new Schema({
       "Medicines",
       "Incidents"
     ],
-    default: "text"
+    default: "Bathroom"
   },
   content: String
 });

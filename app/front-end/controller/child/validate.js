@@ -18,7 +18,10 @@ module.exports = {
       ids: Joi.array().items(Joi.string()).required(),
       news: {
         title: Joi.string().required(),
-        note: Joi.array().items(Joi.string()).required(),
+        time: Joi.string().required(),
+        group: Joi.string().allow('').optional(),
+        selected: Joi.array().items(Joi.string()),
+        note: Joi.array().items(Joi.string()),
         type: Joi.string().required().valid(
           "Bathroom",
           "Photo",
@@ -30,7 +33,7 @@ module.exports = {
           "Siesta",
           "Medicines",
           "Incidents"),
-        content: Joi.string().required(),
+        content: Joi.string().allow('').optional(),
       }
     } 
   }

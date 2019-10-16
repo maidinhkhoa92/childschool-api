@@ -6,9 +6,9 @@ const validate = require('./validate');
 
 module.exports.list = {
 	handler: (req, res) => {
-        const { id } = req.decoded;
+		const { id, type } = req.decoded;
 		
-		classes.list(null, null, id).then(Data => {
+		classes.list(null, null, id, type).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
 			error(res.boom, err);
@@ -97,9 +97,10 @@ module.exports.removeClass = {
 module.exports.detail = {
 	handler: (req, res) => {
 		const user_id = req.decoded.id;
+		const type = req.decoded.type;
 		const { id } = req.params;
 		
-		classes.detail(id, user_id).then(Note => {
+		classes.detail(id, user_id, type).then(Note => {
 			res.status(200).send(Note);
 		}).catch(err => {
 			error(res.boom, err);

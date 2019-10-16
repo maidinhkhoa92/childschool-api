@@ -5,12 +5,19 @@ const child = require('../models/child');
 const colors = require('../helper/colors');
 const _ = require('lodash');
 
-const list = (paged, limit, userId) => {
+const list = (paged, limit, userId, type = "director") => {
   return new Promise((resolve, reject) => {
     var query = classes.find();
-
-    if (userId) {
+    if (userId && type === "director") {
       query = query.where('directorId').equals(userId)
+    }
+
+    if (userId && type === "family") {
+      query = query.where('family').in([userId])
+    }
+
+    if (userId && type === "staff") {
+      query = query.where('teacher').in([userId])
     }
 
     if (limit) {
@@ -79,14 +86,23 @@ const update = (id, userId, body) => {
   })
 }
 
-const detail = (id, userId) => {
+const detail = (id, userId, type = "director") => {
   return new Promise((resolve, reject) => {
     var query = classes.findOne();
+    console.log(userId, type)
 
     query = query.where('_id').equals(id);
 
-    if(userId) {
+    if(userId && type === "director") {
       query = query.where('directorId').equals(userId);
+    }
+
+    if (userId && type === "family") {
+      query = query.where('family').in([userId])
+    }
+
+    if (userId && type === "staff") {
+      query = query.where('teacher').in([userId])
     }
 
     query.populate([

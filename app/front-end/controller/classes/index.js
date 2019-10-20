@@ -84,9 +84,8 @@ module.exports.addClass = {
 module.exports.removeClass = {
 	Validate: validate.removeClass,
 	handler: (req, res) => {
-		const { childId } = req.body;
-		const { id } = req.params;
-		classes.removeClass(id, childId).then(Data => {
+		const { class_id, child_id } = req.params;
+		classes.removeClass(class_id, child_id).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
 			error(res.boom, err);
@@ -116,6 +115,18 @@ module.exports.updateInfor = {
 		const body = req.body;
 		
 		classes.update(id, userId, body).then(Data => {
+			res.status(200).send(Data);
+		}).catch(err => {
+			error(res.boom, err);
+		});
+	}
+};
+
+module.exports.remove = {
+	handler: (req, res) => {
+		const { id } = req.params;
+		
+		classes.remove(id).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
 			error(res.boom, err);

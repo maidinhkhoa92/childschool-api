@@ -42,7 +42,8 @@ router.put('/classes/:id', Token, validate(classes.addClass.Validate), classes.a
 router.patch('/classes/:id', Token, validate(classes.updateInfor.Validate), classes.updateInfor.handler);
 router.get('/classes/:id', Token, classes.detail.handler);
 router.get('/classes', Token, classes.list.handler);
-router.delete('/classes/:id', Token, validate(classes.removeClass.Validate), classes.removeClass.handler);
+router.delete('/classes/:id', Token, classes.remove.handler);
+router.delete('/classes/:class_id/child/:child_id', Token, classes.removeClass.handler);
 
 // classes
 const staff = require('./controller/staff');
@@ -58,7 +59,8 @@ router.get('/menu', Token, menu.list.handler);
 // message
 const message = require('./controller/message');
 
-router.post('/message', Token, validate(message.create.Validate), message.create.handler);
+router.post('/message-class', Token, validate(message.createClass.Validate), message.createClass.handler);
+router.post('/message', Token, validate(message.createUser.Validate), message.createUser.handler);
 
 //upload router
 const upload = require('./controller/upload');

@@ -4,7 +4,7 @@ const child = require("../models/child");
 const news = require("./news");
 const _ = require("lodash");
 
-const list = (paged, limit) => {
+const list = (paged, limit, id, type) => {
   return new Promise((resolve, reject) => {
     var query = child.find();
 
@@ -15,6 +15,10 @@ const list = (paged, limit) => {
     if (paged) {
       const skip = (paged - 1) * limit;
       query = query.skip(skip);
+    }
+
+    if(type && type === 'family') {
+      query = query.where('family').equals(id)
     }
 
     query.sort({date: -1}).exec(function (err, data) {

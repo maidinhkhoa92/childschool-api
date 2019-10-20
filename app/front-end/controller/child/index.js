@@ -2,6 +2,18 @@ const child = require('../../../services/child');
 const error = require('../../../helper/error');
 const validate = require('./validate');
 
+module.exports.list = {
+	handler: (req, res) => {
+		const { id, type } = req.decoded;
+		
+		child.list(null, null, id, type ).then(Data => {
+			res.status(200).send(Data);
+		}).catch(err => {
+			error(res.boom, err);
+		});
+	}
+};
+
 module.exports.detail = {
 	handler: (req, res) => {
 		const { id } = req.params;

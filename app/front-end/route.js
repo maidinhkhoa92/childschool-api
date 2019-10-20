@@ -23,6 +23,7 @@ router.post('/user/compare-digit', Token, validate(user.compareDigit.Validate), 
 // child
 const child = require('./controller/child')
 
+router.get('/child/', Token, child.list.handler);
 router.get('/child/:id', Token, child.detail.handler);
 router.put('/child/:id', Token, validate(child.update.Validate), child.update.handler);
 router.patch('/child', Token, validate(child.updateNews.Validate), child.updateNews.handler);

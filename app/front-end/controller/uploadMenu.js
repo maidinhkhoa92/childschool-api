@@ -1,6 +1,6 @@
 const multer = require('multer');
 const moment = require('moment');
-const parametes = require('../../config/parameters.json');
+const { upload_url } = process.env;
 
 const imageFilter = function (req, file, cb) {
   // accept image only
@@ -18,7 +18,7 @@ module.exports = function (req, res) {
   const current = moment(new Date()).format("DD-MM-YYYY-h:mm:ss-a");
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'uploads/menu');
+      cb(null, '/uploads/menu/');
     },
     filename: function (req, file, cb) {
       const name = file.originalname.replace(/\s+/g, '-').toLowerCase();
@@ -30,7 +30,7 @@ module.exports = function (req, res) {
     if (err) {
       console.log(err);
     } else {
-      res.status(200).send({url: parametes.uploadUrl+req.file.path})
+      res.status(200).send({url: upload_url+req.file.path})
     }
   });
 };

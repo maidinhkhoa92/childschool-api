@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema({
     description: String,
-    time: Date,
+    time: String,
 	familyId: { type: Schema.Types.ObjectId, ref: 'user' }
 })
 

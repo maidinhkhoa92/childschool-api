@@ -9,7 +9,7 @@ module.exports = {
   update: {
     options: { allowUnknownBody: false },
     body: {
-      time: Joi.date().required(),
+      time: Joi.string().required(),
     }
   },
 }

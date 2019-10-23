@@ -89,7 +89,6 @@ const update = (id, userId, body) => {
 const detail = (id, userId, type = "director") => {
   return new Promise((resolve, reject) => {
     var query = classes.findOne();
-    console.log(userId, type)
 
     query = query.where('_id').equals(id);
 

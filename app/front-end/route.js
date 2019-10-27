@@ -63,6 +63,13 @@ const message = require('./controller/message');
 router.post('/message-class', Token, validate(message.createClass.Validate), message.createClass.handler);
 router.post('/message', Token, validate(message.createUser.Validate), message.createUser.handler);
 
+// menu 
+const event = require('./controller/event');
+
+router.get('/event', Token, event.list.handler);
+router.post('/event', Token, validate(event.create.Validate), event.create.handler);
+router.delete('/event/:id', Token, event.remove.handler);
+
 //upload router
 const upload = require('./controller/upload');
 router.post('/upload', Token, upload);

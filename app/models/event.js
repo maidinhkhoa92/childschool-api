@@ -4,9 +4,11 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema({
 	name: String,
-	group: String,
-    note: String,
-    time: Date
+	group: { type: Schema.Types.ObjectId, ref: 'classes' },
+	note: String,
+	date: Date,
+	startTime: String,
+	endTime: String
 })
 
 schema.plugin(timestamp, {

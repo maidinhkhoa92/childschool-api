@@ -1,9 +1,10 @@
-'use strict';
+"use strict";
 
-const event = require('../models/event');
-const _ = require('lodash');
+const event = require("../models/event");
+const _ = require("lodash");
+const moment = require("moment");
 
-const list = (paged, limit) => {
+const list = (paged, limit, class_id, time) => {
   return new Promise((resolve, reject) => {
     var query = event.find();
 
@@ -16,76 +17,86 @@ const list = (paged, limit) => {
       query = query.skip(skip);
     }
 
-    query.sort({date: -1}).exec(function (err, data) {
-        if (err) {
-          reject(err);
-        }
-        
-        if(data === null) {
-          reject({code: 10000})
-        }
+    if (class_id) {
+      query = query.where("group").equals(class_id);
+    }
 
-        const result = {
-          paged: paged,
-          limit: limit,
-          total: data.length,
-          data: _.map(data, item => {
-            return convertData(item)
-          })
-        }
+    if (time) {
+      const startTime = moment(time).startOf('month');
+      const endTime = moment(time).endOf('month');
+      query = query.where("date").gte(startTime).lte(endTime);
+    }
 
-        resolve(result);
+    query.sort({ date: -1 }).populate('group').exec(function(err, data) {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      if (data === null) {
+        reject({ code: 10000 });
+        return;
+      }
+
+      const result = {
+        paged: paged,
+        limit: limit,
+        total: data.length,
+        data: _.map(data, item => {
+          return convertData(item);
+        })
+      };
+
+      resolve(result);
     });
-  })
-}
+  });
+};
 
-const create = (body) => {
+const create = body => {
   return new Promise((resolve, reject) => {
-
-    event.create(body, function (err, data) {
+    event.create(body, function(err, data) {
       if (err) {
         reject(err);
       }
       resolve(convertData(data));
     });
-  })
-}
+  });
+};
 
 const update = (id, body) => {
   return new Promise((resolve, reject) => {
-
-    event.findByIdAndUpdate(id, body, { new: true }, function (err, data) {
+    event.findByIdAndUpdate(id, body, { new: true }, function(err, data) {
       if (err) {
         reject(err);
       }
       resolve(convertData(data));
     });
-  })
-}
+  });
+};
 
-const remove = (id) => {
+const remove = id => {
   return new Promise((resolve, reject) => {
-    event.remove({_id: id}, function (err) {
+    event.remove({ _id: id }, function(err) {
       if (err) {
         reject(err);
       }
-      resolve({status: 'done'});
+      resolve({ status: "done" });
     });
-  })
-}
+  });
+};
 
-const detail = (id) => {
-    return new Promise((resolve, reject) => {
-      event.findById(id, function (err, data) {
-        if (err) {
-          reject(err);
-        }
-        resolve(convertData(data));
-      });
-    })
-  }
+const detail = id => {
+  return new Promise((resolve, reject) => {
+    event.findById(id, function(err, data) {
+      if (err) {
+        reject(err);
+      }
+      resolve(convertData(data));
+    });
+  });
+};
 
-const convertData = (data) => {
+const convertData = data => {
   var result = data;
   if (data === null || data === undefined) {
     return null;
@@ -97,7 +108,7 @@ const convertData = (data) => {
   delete result._id;
   delete result.__v;
   return result;
-}
+};
 
 module.exports = {
   list,
@@ -105,4 +116,4 @@ module.exports = {
   update,
   remove,
   detail
-}
+};

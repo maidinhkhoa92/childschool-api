@@ -67,7 +67,9 @@ router.post('/message', Token, validate(message.createUser.Validate), message.cr
 const event = require('./controller/event');
 
 router.get('/event', Token, event.list.handler);
+router.get('/event/:id', Token, event.detail.handler);
 router.post('/event', Token, validate(event.create.Validate), event.create.handler);
+router.put('/event/:id', Token, validate(event.update.Validate), event.update.handler);
 router.delete('/event/:id', Token, event.remove.handler);
 
 //upload router

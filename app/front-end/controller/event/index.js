@@ -51,3 +51,14 @@ module.exports.update = {
 		});
 	}
 }
+
+module.exports.detail = {
+	handler: (req, res) => {
+		const { id } = req.params;
+		event.detail(id).then(Data => {
+			res.status(200).send(Data);
+		}).catch(err => {
+			error(res.boom, err);
+		});
+	}
+};

@@ -107,6 +107,10 @@ const detail = (id, userId, type = "director") => {
     query.populate([
       {
         path: 'child',
+        populate : [{
+          path : 'family',
+          select: '-password'
+        }]
       },
       {
         path: 'family',

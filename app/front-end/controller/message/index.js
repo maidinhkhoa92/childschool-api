@@ -2,12 +2,13 @@ const messages = require("../../../services/messages");
 const error = require("../../../helper/error");
 const validate = require("./validate");
 
-module.exports.createClass = {
-  Validate: validate.createClass,
+
+module.exports.create = {
+  Validate: validate.create,
   handler: (req, res) => {
-    const { message, from_user, to_class } = req.body;
+    const { message, from_user, to_user, classes, type } = req.body;
     messages
-      .create(from_user, to_class, message)
+      .create(from_user, to_user, message, classes, type)
       .then(data => {
         res.status(200).send(data);
       })
@@ -17,16 +18,35 @@ module.exports.createClass = {
   }
 };
 
-module.exports.createUser = {
-  Validate: validate.createUser,
+module.exports.list = {
   handler: (req, res) => {
-    const { message, from_user, to_user } = req.body;
+    const { id, type } = req.decoded;
+    const { class_id } = req.query
+
     messages
-      .create(from_user, to_user, message)
+      .list(1, 999, id, type, class_id)
       .then(data => {
         res.status(200).send(data);
       })
       .catch(err => {
+        error(res.boom, err);
+      });
+  }
+};
+
+module.exports.update = {
+  Validate: validate.update,
+  handler: (req, res) => {
+    const { id } = req.params;
+    const { oldMessage, currentMessage, firestore } = req.body;
+    const user_id = req.decoded.id
+    messages
+      .update(id, firestore, currentMessage, oldMessage, user_id)
+      .then(data => {
+        res.status(200).send(data);
+      })
+      .catch(err => {
+        console.log(err);
         error(res.boom, err);
       });
   }

@@ -60,8 +60,9 @@ router.get('/menu', Token, menu.list.handler);
 // message
 const message = require('./controller/message');
 
-router.post('/message-class', Token, validate(message.createClass.Validate), message.createClass.handler);
-router.post('/message', Token, validate(message.createUser.Validate), message.createUser.handler);
+router.post('/message', Token, validate(message.create.Validate), message.create.handler);
+router.get('/message', Token, message.list.handler);
+router.put('/message/:id', Token, validate(message.update.Validate), message.update.handler);
 
 // menu 
 const event = require('./controller/event');

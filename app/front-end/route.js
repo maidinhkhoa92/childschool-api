@@ -73,6 +73,11 @@ router.post('/event', Token, validate(event.create.Validate), event.create.handl
 router.put('/event/:id', Token, validate(event.update.Validate), event.update.handler);
 router.delete('/event/:id', Token, event.remove.handler);
 
+// check in , check out
+const checkin = require('./controller/checkin');
+
+router.post('/class-action', Token, validate(checkin.create.Validate), checkin.create.handler);
+
 //upload router
 const upload = require('./controller/upload');
 router.post('/upload', Token, upload);

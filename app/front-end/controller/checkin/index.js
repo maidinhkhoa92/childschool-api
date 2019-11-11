@@ -14,3 +14,17 @@ module.exports.create = {
 		});
 	}
 };
+
+module.exports.update = {
+	Validate: validate.update,
+	handler: (req, res) => {
+		const body = req.body
+		const { id } = req.params;
+		
+		checkin.update(id, body).then(Data => {
+			res.status(200).send(Data);
+		}).catch(err => {
+			error(res.boom, err);
+		});
+	}
+};

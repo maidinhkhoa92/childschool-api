@@ -77,6 +77,7 @@ router.delete('/event/:id', Token, event.remove.handler);
 const checkin = require('./controller/checkin');
 
 router.post('/class-action', Token, validate(checkin.create.Validate), checkin.create.handler);
+router.put('/class-action/:id', Token, validate(checkin.update.Validate), checkin.update.handler);
 
 //upload router
 const upload = require('./controller/upload');

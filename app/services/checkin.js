@@ -4,19 +4,38 @@ const checkin = require("../models/checkin");
 
 module.exports.createOrUpdate = (body) => {
   return new Promise((resolve, reject) => {
-    var query = body,
-        update = { expire: new Date() },
-        options = { upsert: true, new: true, setDefaultsOnInsert: true };
-        checkin.findOneAndUpdate(query, update, options, function(error, result) {
-            if (error) {
-                reject(error);
-                return;
-            }
-            
-            resolve(convertData(result))
-        });
+    var query = body;
+    checkin.findOne({ date: body.date, classes: body.classes }, function (err, Checkin) {
+      if(err) {
+        reject(err);
+        return;
+      }
+      if(Checkin === null) {
+        const newCheckin = new checkin(query);
+        newCheckin.save();
+        resolve(convertData(newCheckin));
+        return
+      }
+      resolve(convertData(Checkin));
+    });
   });
 };
+
+module.exports.update = (id, body) => {
+  return new Promise((resolve, reject) => {
+    const query = {
+      _id: id,
+    };
+    
+    checkin.findOneAndUpdate(query, body, { new: true }, function (err, data) {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(convertData(data));
+    });
+  })
+}
 
 const convertData = (data, password = true) => {
     var result = data;

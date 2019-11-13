@@ -16,7 +16,9 @@ app
   .use(cors())
   .use(boom())
   .use(flash())
-  .use("/uploads", express.static(__dirname + '/uploads'))
+  .use("/images", express.static(__dirname + '/images'))
+  .use("/menus", express.static(__dirname + '/menus'))
+  .use("/videos", express.static(__dirname + '/videos'))
   .use('/backend', backend)
   .use('/frontend', frontend)
   .use(function (err, req, res, next) {

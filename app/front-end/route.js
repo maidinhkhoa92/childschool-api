@@ -86,4 +86,7 @@ router.post('/upload', Token, upload);
 const uploadMenu = require('./controller/uploadMenu');
 router.post('/upload-menu', Token, uploadMenu);
 
+const uploadVideo = require('./controller/uploadVideo');
+router.post('/upload-video', Token, uploadVideo);
+
 module.exports = router;

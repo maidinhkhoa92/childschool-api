@@ -4,10 +4,10 @@ var fs = require('fs');
 
 const imageFilter = function(req, file, cb) {
   // accept image only
-  if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
-    return cb(new Error("Only image files are allowed!"), false);
+  if (!file.originalname.match(/\.(mp4)$/)) {
+    return cb(new Error("Only Video files are allowed!"), false);
   }
-  if (file.size > 1000000) {
+  if (file.size > 5000000) {
     return cb(new Error("Size : 1mb"), false);
   }
   cb(null, true);
@@ -15,7 +15,7 @@ const imageFilter = function(req, file, cb) {
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, "images");
+    cb(null, "videos");
   },
   filename: function(req, file, cb) {
     const name = file.originalname.replace(/\s+/g, "-").toLowerCase();
@@ -24,8 +24,8 @@ const storage = multer.diskStorage({
 });
 
 module.exports = function(req, res) {
-  if (!fs.existsSync('images')){
-    fs.mkdirSync('images');
+  if (!fs.existsSync('videos')){
+    fs.mkdirSync('videos');
   }
   const uploadMedia = multer({ storage: storage, fileFilter: imageFilter }).single('file');
   uploadMedia(req, res, function (err) {

@@ -36,37 +36,23 @@ module.exports.addClass = {
 		const {children, firstTeacher, secondTeacher, family} = req.body;
 		const user_id = req.decoded.id;
 		const { id } = req.params;
-		const params1 = {
-			email: firstTeacher.email,
-			typeOfUser: "staff",
-			profile: firstTeacher.profile
-		}
-		const params2 = {
-			email: secondTeacher.email,
-			typeOfUser: "staff",
-			profile: secondTeacher.profile
-		}
-		const params3 = {
+
+		const family_body = {
 			email: family.email,
 			typeOfUser: "family",
 			profile: family.profile
 		}
 
-		Promise.all([
-			user.findByEmailAndCreate(params1, user_id), 
-			user.findByEmailAndCreate(params2, user_id), 
-			user.findByEmailAndCreate(params3, user_id)
-		])
-		.then(data => {
+		user.findByEmailAndCreate(family_body, user_id).then(data => {
 			const params = {
 				profile: children,
-				firstTeacher: data[0].id,
-				secondTeacher: data[1].id,
-				family: data[2].id,
+				firstTeacher: firstTeacher,
+				secondTeacher: secondTeacher,
+				family: data.id,
 				directorId: user_id
 			}
 			child.create(params).then(Child => {
-				classes.addClass(id, Child.id, data[0].id, data[1].id, data[2].id).then(Classes => {
+				classes.addClass(id, Child.id, firstTeacher, secondTeacher, data.id).then(Classes => {
 					res.status(200).send(Classes);
 				}).catch(e =>{
 					console.log(e)

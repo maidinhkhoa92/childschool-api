@@ -13,20 +13,8 @@ module.exports = {
         firstName: Joi.string().required(),
         lastName: Joi.string().required(),
       }, 
-      firstTeacher: {
-        email: Joi.string().email().required(),
-        profile: {
-          firstName: Joi.string().required(),
-          telephone: Joi.string().required(),
-        }
-      }, 
-      secondTeacher: {
-        email: Joi.string().email().required(),
-        profile: {
-          firstName: Joi.string().required(),
-          telephone: Joi.string().required(),
-        }
-      }, 
+      firstTeacher: Joi.string().required(), 
+      secondTeacher: Joi.string().required(), 
       family: {
         profile: {
           firstName: Joi.string().required(),

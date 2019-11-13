@@ -9,7 +9,7 @@ const flash = require('connect-flash');
 const cors = require('cors');
 const boom = require('express-boom');
 require('./app/config/database');
-
+require('dotenv').config()
 app
   .use(morgan('tiny'))
   .use(bodyParser.json())

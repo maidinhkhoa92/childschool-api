@@ -164,15 +164,15 @@ const addClass = (id, childId, teacher_id_1, teacher_id_2, family_id) => {
       Classes.child = child_classes;
 
       // check if teacher or family exist
-      if(_.findIndex(teacher_classes, teacher_id_1) === -1) {
+      if(!_.includes(teacher_classes.toString(), teacher_id_1)) {
         teacher_classes.push(teacher_id_1)
         Classes.teacher = teacher_classes
       }
-      if(_.findIndex(teacher_classes, teacher_id_2) === -1) {
+      if(!_.includes(teacher_classes.toString(), teacher_id_2)) {
         teacher_classes.push(teacher_id_2)
         Classes.teacher = teacher_classes
       }
-      if(_.findIndex(family_classes, family_id) === -1) {
+      if(_.includes(family_classes, family_id) === -1) {
         family_classes.push(family_id)
         Classes.family = family_classes
       }

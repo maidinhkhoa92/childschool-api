@@ -98,7 +98,7 @@ const updateNews = (body, ids_child) => {
         const new_childs = await _.map(Childs, item => {
           let pre_news = item.news;
           let result = {};
-          pre_news.push(news_id);
+          pre_news.unshift(news_id);
           item.news = pre_news;
           item.save();
           return convertData(item);

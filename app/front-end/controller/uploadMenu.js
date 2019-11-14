@@ -32,6 +32,7 @@ module.exports = function(req, res) {
     if (err) {
       console.log(err);
     } else {
+      req.file.path = req.file.path.replace(/\\/g, "/");
       res.status(200).send({ url: process.env.upload_url + req.file.path });
     }
   });

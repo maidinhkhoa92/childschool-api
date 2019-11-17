@@ -11,6 +11,11 @@ const schema = new Schema({
 	directorId: { type: Schema.Types.ObjectId, ref: 'user' },
 	classes: { type: Schema.Types.ObjectId, ref: 'classes' },
 	news: [{ type: Schema.Types.ObjectId, ref: 'new' }],
+	sleeping: {
+		type: Boolean,
+		required: true,
+		default: false,
+	},
 })
 
 schema.virtual('id').get(function(){

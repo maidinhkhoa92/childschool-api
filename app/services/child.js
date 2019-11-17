@@ -4,7 +4,7 @@ const child = require("../models/child");
 const news = require("./news");
 const _ = require("lodash");
 
-const list = (paged, limit, id, type) => {
+const list = (paged, limit, id, type, class_id) => {
   return new Promise((resolve, reject) => {
     var query = child.find();
 
@@ -19,6 +19,10 @@ const list = (paged, limit, id, type) => {
 
     if(type && type === 'family') {
       query = query.where('family').equals(id)
+    }
+
+    if(class_id) {
+      query = query.where('classes').equals(class_id)
     }
 
     query.sort({date: -1}).exec(function (err, data) {
@@ -97,9 +101,14 @@ const updateNews = (body, ids_child) => {
         const news_id = data.id;
         const new_childs = await _.map(Childs, item => {
           let pre_news = item.news;
+          let sleeping = item.sleeping;
           let result = {};
           pre_news.unshift(news_id);
           item.news = pre_news;
+          if(body.type === 'Siesta') {
+            sleeping = body.group === 'Durmiendo' ? true : false;
+          }
+          item.sleeping = sleeping;
           item.save();
           return convertData(item);
         })
@@ -111,7 +120,30 @@ const updateNews = (body, ids_child) => {
   })
 }
 
-const convertData = (data, password = true) => {
+const updateStatus = (body, child_id) => {
+  return new Promise((resolve, reject) => {
+    const status = body.group === 'Durmiendo' ? true : false;
+    child.findOne().where('_id').equals(child_id).exec((error, Child) => {
+      if(error) {
+        reject(error);
+        return;
+      }
+      news.create(body).then(async data =>{
+        const news_id = data.id;
+        let pre_news = Child.news;
+        pre_news.unshift(news_id);
+        Child.news = pre_news;
+        Child.sleeping = status
+        Child.save();
+        resolve(Child);
+      }).catch(err => {
+        reject(err)
+      })
+    });
+  })
+}
+
+const convertData = (data) => {
     var result = data;
     if (data === null || data === undefined) {
       return null;
@@ -130,5 +162,6 @@ module.exports = {
     list,
     detail,
     update,
-    updateNews
+    updateNews,
+    updateStatus
 }

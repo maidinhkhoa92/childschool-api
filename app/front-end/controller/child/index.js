@@ -5,8 +5,8 @@ const validate = require('./validate');
 module.exports.list = {
 	handler: (req, res) => {
 		const { id, type } = req.decoded;
-		
-		child.list(null, null, id, type ).then(Data => {
+		const { class_id } = req.query;
+		child.list(null, null, id, type, class_id ).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
 			error(res.boom, err);
@@ -49,6 +49,20 @@ module.exports.updateNews = {
 			res.status(200).send(Data);
 		}).catch(err => {
 			error(res.boom, err);
+		});
+	}
+};
+
+module.exports.updateStatus = {
+	Validate: validate.updateStatus,
+	handler: (req, res) => {
+		const { id } = req.params;
+		
+		child.updateStatus(req.body, id).then(Data => {
+			res.status(200).send(Data);
+		}).catch(err => {
+			console.log(err)
+			// error(res.boom, err);
 		});
 	}
 };

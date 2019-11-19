@@ -3,7 +3,8 @@ const timestamp = require('mongoose-timestamp-plugin');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-    url: String,
+	url: String,
+	name: String,
 	directorId: { type: Schema.Types.ObjectId, ref: 'user' }
 })
 

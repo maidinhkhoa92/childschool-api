@@ -33,7 +33,7 @@ module.exports = function(req, res) {
       console.log(err);
     } else {
       req.file.path = req.file.path.replace(/\\/g, "/");
-      res.status(200).send({ url: process.env.upload_url + req.file.path });
+      res.status(200).send({ url: process.env.upload_url + req.file.path, name: req.file.originalname });
     }
   });
 };

@@ -1,6 +1,20 @@
 "use strict";
 
 const checkin = require("../models/checkin");
+const moment = require("moment");
+
+module.exports.list = director_id => {
+  return new Promise((resolve, reject) => {
+    const time = moment(new Date()).format('YYYY-MM-DD');
+    checkin.find({date: time, director: director_id}).populate('classes').exec(function (err, Checkins) {
+      if(err) {
+        reject(err);
+        return;
+      }
+      resolve(Checkins);
+    })
+  })
+}
 
 module.exports.createOrUpdate = (body) => {
   return new Promise((resolve, reject) => {

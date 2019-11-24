@@ -77,6 +77,7 @@ router.delete('/event/:id', Token, event.remove.handler);
 // check in , check out
 const checkin = require('./controller/checkin');
 
+router.get('/class-action', Token, checkin.list.handler);
 router.post('/class-action', Token, validate(checkin.create.Validate), checkin.create.handler);
 router.put('/class-action/:id', Token, validate(checkin.update.Validate), checkin.update.handler);
 

@@ -4,6 +4,7 @@ module.exports = {
     options: { allowUnknownBody: false },
     body: {
       description: Joi.string().required(),
+      childId: Joi.string().required(),
     }
   },
   update: {

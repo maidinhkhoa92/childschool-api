@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
     description: String,
     time: String,
-	familyId: { type: Schema.Types.ObjectId, ref: 'user' }
+	familyId: { type: Schema.Types.ObjectId, ref: 'user' },
+	childId: { type: Schema.Types.ObjectId, ref: 'child' }
 })
 
 schema.plugin(timestamp, {

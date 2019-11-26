@@ -3,7 +3,7 @@
 const note = require('../models/note');
 const _ = require('lodash');
 
-const list = (paged, limit, userId) => {
+const list = (paged, limit, userId, childId) => {
   return new Promise((resolve, reject) => {
     var query = note.find();
 
@@ -18,6 +18,10 @@ const list = (paged, limit, userId) => {
 
     if (userId) {
       query = query.where('familyId').equals(userId)
+    }
+
+    if (childId) {
+      query = query.where('childId').equals(childId)
     }
 
     query.sort({date: -1}).exec(function (err, data) {

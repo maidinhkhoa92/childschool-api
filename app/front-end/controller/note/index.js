@@ -4,9 +4,10 @@ const validate = require('./validate');
 
 module.exports.list = {
 	handler: (req, res) => {
-        const { id } = req.decoded;
+		const { id } = req.decoded;
+		const { child_id } = req.query;
 		
-		note.list(null, null, id).then(Note => {
+		note.list(null, null, id, child_id).then(Note => {
 			res.status(200).send(Note);
 		}).catch(err => {
 			error(res.boom, err);

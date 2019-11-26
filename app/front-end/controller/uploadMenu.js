@@ -30,9 +30,10 @@ module.exports = function(req, res) {
   const uploadMedia = multer({ storage: storage, fileFilter: imageFilter }).single('file');
   uploadMedia(req, res, function (err) {
     if (err) {
-      console.log(err);
+      res.boom.conflict(err);
     } else {
-      res.status(200).send({ url: process.env.upload_url + req.file.path });
+      req.file.path = req.file.path.replace(/\\/g, "/");
+      res.status(200).send({ url: process.env.upload_url + req.file.path, name: req.file.originalname });
     }
   });
 };

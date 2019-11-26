@@ -27,6 +27,7 @@ router.get('/child/', Token, child.list.handler);
 router.get('/child/:id', Token, child.detail.handler);
 router.put('/child/:id', Token, validate(child.update.Validate), child.update.handler);
 router.patch('/child', Token, validate(child.updateNews.Validate), child.updateNews.handler);
+router.patch('/child/:id', Token, validate(child.updateStatus.Validate), child.updateStatus.handler);
 
 // note
 const note = require('./controller/note');
@@ -76,6 +77,7 @@ router.delete('/event/:id', Token, event.remove.handler);
 // check in , check out
 const checkin = require('./controller/checkin');
 
+router.get('/class-action', Token, checkin.list.handler);
 router.post('/class-action', Token, validate(checkin.create.Validate), checkin.create.handler);
 router.put('/class-action/:id', Token, validate(checkin.update.Validate), checkin.update.handler);
 

@@ -270,6 +270,8 @@ const center = (id, type = null) => {
 
     query = query.where('directorId').equals(id);
 
+    query = query.where('status').equals(true);
+
     if(type !== null) {
       query = query.where('typeOfUser').equals(type);
     }

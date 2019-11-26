@@ -19,7 +19,6 @@ const list = (userId) => {
         if(data === null) {
           reject({code: 10000})
         }
-
         const result = {
           total: data.length,
           data: _.map(data, item => {

@@ -8,6 +8,7 @@ const schema = new Schema({
     absent: [{ type: Schema.Types.ObjectId, ref: 'child' }],
     checkin: [{ type: Schema.Types.ObjectId, ref: 'child' }],
 	checkout: [{ type: Schema.Types.ObjectId, ref: 'child' }],
+	director: { type: Schema.Types.ObjectId, ref: 'user' },
 })
   
 schema.set('toObject', { virtuals: true })

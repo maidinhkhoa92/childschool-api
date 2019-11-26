@@ -88,7 +88,11 @@ const update = (id, profile) => {
 
 const detail = (id) => {
   return new Promise((resolve, reject) => {
-    child.findOne({_id: id}).populate('news').exec(function (err, data) {
+    child.findOne({_id: id})
+      .populate('news')
+      .populate('firstTeacher')
+      .populate('secondTeacher')
+      .exec(function (err, data) {
       if (err) {
         reject(err);
       }

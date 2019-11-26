@@ -1,6 +1,8 @@
 "use strict";
 
 const child = require("../models/child");
+const note = require('../models/note');
+const defaultNotes = require('../helper/notes');
 const news = require("./news");
 const _ = require("lodash");
 
@@ -53,7 +55,16 @@ const create = body => {
       if (err) {
         reject(err);
       } 
-      resolve(convertData(data));
+      const initNotes = _.map(defaultNotes, item => _.extend({childId: data.id}, item));
+      console.log(initNotes)
+      note.insertMany(initNotes)
+        .then(function(newNotes) {
+          console.log(newNotes)
+          resolve(convertData(data));
+        })
+        .catch(function(err) {
+          reject(err)
+        });
     });
   });
 };

@@ -3,7 +3,7 @@
 const note = require('../models/note');
 const _ = require('lodash');
 
-const list = (paged, limit, userId, childId) => {
+const list = (paged, limit, childId) => {
   return new Promise((resolve, reject) => {
     var query = note.find();
 
@@ -15,11 +15,7 @@ const list = (paged, limit, userId, childId) => {
       const skip = (paged - 1) * limit;
       query = query.skip(skip);
     }
-
-    if (userId) {
-      query = query.where('familyId').equals(userId)
-    }
-
+    console.log(childId)
     if (childId) {
       query = query.where('childId').equals(childId)
     }

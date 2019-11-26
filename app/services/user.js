@@ -194,7 +194,7 @@ const list = (paged, limit) => {
     }
 
     if (paged) {
-      const skip = (paged - 1) * limit;
+      const skip = paged * limit;
       query = query.skip(skip);
     }
 
@@ -205,17 +205,17 @@ const list = (paged, limit) => {
       if(data === null) {
         reject({code: 10000})
       }
-
-      const result = {
-        paged: paged,
-        limit: limit,
-        total: data.length,
-        data: _.map(data, item => {
-          return convertData(item)
-        })
-      }
-      resolve(result);
-
+      user.count({}, function( err, count){
+        const result = {
+          paged: paged,
+          limit: limit,
+          total: count,
+          data: _.map(data, item => {
+            return convertData(item)
+          })
+        }
+        resolve(result);
+      })
     });
   });
 };
@@ -240,7 +240,7 @@ const remove = id => {
       if (err) {
         reject(err);
       }
-      resolve({status: done});
+      resolve({status: 'done'});
     });
   });
 };

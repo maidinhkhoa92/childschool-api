@@ -99,3 +99,17 @@ module.exports.updateChildPerson = {
 		})
 	}
 };
+
+module.exports.search = {
+	Validate: validate.search,
+	handler: (req, res) => {
+		const { word } = req.body;
+		const { id, type } = req.decoded;
+		child.search(word, id, type).then(Data => {
+			res.status(200).send(Data);
+		}).catch(err => {
+			console.log(err)
+			// error(res.boom, err);
+		});
+	}
+};

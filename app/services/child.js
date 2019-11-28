@@ -6,6 +6,34 @@ const defaultNotes = require("../helper/notes");
 const news = require("./news");
 const _ = require("lodash");
 
+const search = (word, id, type) => {
+  return new Promise((resolve, reject) => {
+    var query = child.find();
+    query = query.where("profile.firstName").equals({
+      $regex: new RegExp(word, "ig")
+    });
+    if (type && type === "staff") {
+      query = query.or([{ firstTeacher: id }, { secondTeacher: id }]);
+    }
+
+    if (type && type === "director") {
+      query = query.where("directorId").equals(id);
+    }
+    query.sort({ date: -1 }).exec(function(err, data) {
+      if (err) {
+        reject(err);
+      }
+      if (data === null) {
+        reject({ code: 10000 });
+      }
+      const result = _.map(data, item => {
+        return convertData(item);
+      });
+      resolve(result);
+    });
+  });
+};
+
 const list = (paged, limit, id, type, class_id) => {
   return new Promise((resolve, reject) => {
     var query = child.find();
@@ -179,16 +207,16 @@ const updateStatus = (body, child_id) => {
 const updateAll = (id, body) => {
   return new Promise((resolve, reject) => {
     child.findById(id, function(error, data) {
-      if(error) {
+      if (error) {
         reject(error);
         return;
       }
       data.profile = {
         ...data.profile,
-        ...body.profile,
-      }
+        ...body.profile
+      };
       resolve(convertData(data.save()));
-    })
+    });
   });
 };
 
@@ -206,7 +234,6 @@ const convertData = data => {
   return result;
 };
 
-
 module.exports = {
   create,
   list,
@@ -214,5 +241,6 @@ module.exports = {
   update,
   updateNews,
   updateStatus,
-  updateAll
+  updateAll,
+  search
 };

@@ -94,4 +94,10 @@ module.exports = {
       }
     }
   },
+  search: {
+    options: { allowUnknownBody: false },
+    body: {
+      word: Joi.string().required(),
+    }
+  },
 };

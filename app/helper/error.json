@@ -1,36 +1,36 @@
 {
   "0": {
-    "msg": "Lỗi không xác định",
+    "msg": "Error desconocido",
     "method": "badRequest"
   },
   "1": "Account exist",
   "2": "Email exist",
   "3": {
-    "msg": "Your phone number is updated",
+    "msg": "Tu número de teléfono está actualizado",
     "method": "badRequest"
   },
   "4": {
-    "msg": "Password and Confirm password don't match",
+    "msg": "Contraseña y Confirmar contraseña no coinciden",
     "method": "unauthorized"
   },
   "5": {
-    "msg": "This account is actived.",
+    "msg": "Esta cuenta está activada.",
     "method": "unauthorized"
   },
   "6": {
-    "msg": "This account is not actived.",
+    "msg": "Esta cuenta no está activada.",
     "method": "unauthorized"
   },
   "7": {
-    "msg": "Digit is incorrect",
+    "msg": "!Revisa que coincida tu PIN !",
     "method": "unauthorized"
   },
   "8": {
-    "msg": "Account does not exist",
+    "msg": "La cuenta no existe",
     "method": "badRequest"
   },
   "9": {
-    "msg": "Digit is not matched",
+    "msg": "El dígito no coincide",
     "method": "badRequest"
   },
   "9997": {
@@ -42,7 +42,7 @@
     "method": "unauthorized"
   },
   "9999": {
-    "msg": "Username or password is incorrect",
+    "msg": "Nombre de usuario o contraseña incorrecta",
     "method": "unauthorized"
   },
   "10000": {

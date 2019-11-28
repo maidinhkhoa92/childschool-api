@@ -4,9 +4,11 @@ const validate = require('./validate');
 
 module.exports.list = {
 	handler: (req, res) => {
-        const { id } = req.decoded;
-		
-		menu.list(id).then(Data => {
+		const { id } = req.decoded;
+		const { director } = req.query;
+		const check_id = director || id;
+		console.log(check_id);
+		menu.list(check_id).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
 			error(res.boom, err);

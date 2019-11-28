@@ -42,4 +42,12 @@ module.exports = {
       status: Joi.boolean(),
     }
   },
+  changeDigit: {
+    options: { allowUnknownBody: false },
+    body: {
+      oldDigit: Joi.array().items(Joi.number()).required(),
+      newDigit: Joi.array().items(Joi.number()).required(),
+      confirmDigit: Joi.array().items(Joi.number()).required(),
+    }
+  },
 }

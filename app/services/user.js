@@ -298,6 +298,41 @@ const center = (id, type = null) => {
   })
 }
 
+const changeDigit = (id, oldDigit, newDigit, confirmDigit) => {
+  return new Promise((resolve, reject) => {
+    user.findById(id, function(error, User) {
+      if (error) {
+        reject(error);
+        return;
+      }
+
+      if (User === null || User === undefined) {
+        reject({ code: 8 });
+        return;
+      }
+
+      if (User.active !== "Digit confirmed") {
+        reject({ code: 5 });
+        return;
+      }
+
+      if (JSON.stringify(User.digit) !== JSON.stringify(oldDigit)) {
+        reject({code: 7});
+        return;
+      }
+
+      if (JSON.stringify(newDigit) !== JSON.stringify(confirmDigit)) {
+        reject({code: 9});
+        return;
+      }
+
+      User.digit = newDigit;
+      User.save();
+      resolve(convertData(User));
+    });
+  });
+};
+
 const convertData = (data, password = true) => {
   var result = data;
   if (data === null || data === undefined) {
@@ -326,5 +361,6 @@ module.exports = {
   detail,
   remove,
   findByEmailAndCreate,
-  center
+  center,
+  changeDigit
 };

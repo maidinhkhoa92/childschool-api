@@ -19,6 +19,7 @@ router.patch('/user/update-password', validate(user.updatePassword.Validate), us
 router.patch('/user/update-digit', Token, validate(user.updateDigit.Validate), user.updateDigit.handler);
 router.patch('/user/:id', Token, validate(user.deactive.Validate), user.deactive.handler);
 router.post('/user/compare-digit', Token, validate(user.compareDigit.Validate), user.compareDigit.handler);
+router.post('/user/change-digit', Token, validate(user.changeDigit.Validate), user.changeDigit.handler);
 
 // child
 const child = require('./controller/child')

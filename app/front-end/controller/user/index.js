@@ -68,6 +68,23 @@ module.exports.compareDigit = {
   }
 };
 
+module.exports.changeDigit = {
+  Validate: validate.changeDigit,
+  handler: function(req, res, next) {
+    const { oldDigit, newDigit, confirmDigit } = req.body;
+    const { id } = req.decoded;
+
+    user
+      .changeDigit(id, oldDigit, newDigit, confirmDigit)
+      .then(data => {
+        res.status(200).send(data);
+      })
+      .catch(err => {
+        error(res.boom, err);
+      });
+  }
+};
+
 module.exports.update = {
   Validate: validate.update,
   handler: (req, res) => {

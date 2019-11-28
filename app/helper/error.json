@@ -29,6 +29,10 @@
     "msg": "Account does not exist",
     "method": "badRequest"
   },
+  "9": {
+    "msg": "Digit is not matched",
+    "method": "badRequest"
+  },
   "9997": {
     "msg": "No token",
     "method": "unauthorized"

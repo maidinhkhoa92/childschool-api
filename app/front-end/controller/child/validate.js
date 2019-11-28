@@ -74,5 +74,24 @@ module.exports = {
         .allow("")
         .optional()
     }
-  }
+  },
+  updateChildPerson: {
+    options: { allowUnknownBody: false },
+    body: {
+      children: {
+        firstName: Joi.string().required(),
+        lastName: Joi.string().required(),
+      }, 
+      firstTeacher: Joi.string().required(), 
+      secondTeacher: Joi.string().required(), 
+      family: {
+        profile: {
+          firstName: Joi.string().required(),
+          lastName: Joi.string().required(),
+          telephone: Joi.string().required(),
+        },
+        email: Joi.string().email().required(),
+      }
+    }
+  },
 };

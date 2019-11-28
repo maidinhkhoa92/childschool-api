@@ -29,6 +29,7 @@ router.get('/child/:id', Token, child.detail.handler);
 router.put('/child/:id', Token, validate(child.update.Validate), child.update.handler);
 router.patch('/child', Token, validate(child.updateNews.Validate), child.updateNews.handler);
 router.patch('/child/:id', Token, validate(child.updateStatus.Validate), child.updateStatus.handler);
+router.put('/child-person/:id', Token, validate(child.updateChildPerson.Validate), child.updateChildPerson.handler);
 
 // note
 const note = require('./controller/note');

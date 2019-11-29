@@ -84,6 +84,10 @@ router.get('/class-action', Token, checkin.list.handler);
 router.post('/class-action', Token, validate(checkin.create.Validate), checkin.create.handler);
 router.put('/class-action/:id', Token, validate(checkin.update.Validate), checkin.update.handler);
 
+// news
+const news = require('./controller/news');
+router.get('/news', Token, news.list.handler);
+
 //upload router
 const upload = require('./controller/upload');
 router.post('/upload', Token, upload);

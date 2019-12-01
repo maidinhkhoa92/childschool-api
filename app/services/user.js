@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const transporter = require('../config/nodemailer');
 const parameters = require('../config/parameters.json');
 const _ = require('lodash');
+const mailTemplate = require('../helper/email');
 
 const create = (body, directorId) => {
   return new Promise((resolve, reject) => {
@@ -16,13 +17,25 @@ const create = (body, directorId) => {
       if (err) {
         reject(err);
         return;
-      } 
-      const mailOptions = {
+      }
+
+      let mailOptions = {
         from: 'admin@gmail.com',
         to: data.email,
-        subject: 'Your new account',
-        text: "Your link: " + parameters.registerWebAppUrl
+        subject: mailTemplate.director.subject,
+        html: mailTemplate.director.content
       };
+
+      if(data.typeOfUser === 'staff') {
+        mailOptions.subject = mailTemplate.staff.subject;
+        mailOptions.html = mailTemplate.staff.content;
+      }
+
+      if(data.typeOfUser === 'family') {
+        mailOptions.subject = mailTemplate.family.subject;
+        mailOptions.html = mailTemplate.family.content;
+      }
+
       transporter.sendMail(mailOptions, function(error, info){
         if (err) {
           reject(error);

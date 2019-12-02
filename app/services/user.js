@@ -154,6 +154,34 @@ const updateDigit = (id, digit) => {
   });
 };
 
+const forgotDigit = (email) => {
+  return new Promise((resolve, reject) => {
+    const digit = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)]
+    let mailOptions = {
+      from: 'admin@gmail.com',
+      to: email,
+      subject: 'Reset Digit',
+      html: `<p>New digit: ${JSON.stringify(digit)}</p>`
+    };
+    user.findOne({email: email}, function(err, data) {
+      if(err) {
+        reject(err);
+        return;
+      }
+      
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          reject(error);
+          return;
+        } 
+        data.digit = digit;
+        data.save();
+        resolve(convertData(data));
+      })
+    })
+  });
+};
+
 const compareDigit = (id, digit) => {
   return new Promise((resolve, reject) => {
     user.findById(id, function(error, User) {
@@ -375,5 +403,6 @@ module.exports = {
   remove,
   findByEmailAndCreate,
   center,
-  changeDigit
+  changeDigit,
+  forgotDigit
 };

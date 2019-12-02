@@ -20,6 +20,7 @@ router.patch('/user/update-digit', Token, validate(user.updateDigit.Validate), u
 router.patch('/user/:id', Token, validate(user.deactive.Validate), user.deactive.handler);
 router.post('/user/compare-digit', Token, validate(user.compareDigit.Validate), user.compareDigit.handler);
 router.post('/user/change-digit', Token, validate(user.changeDigit.Validate), user.changeDigit.handler);
+router.post('/user/forgot-digit', Token, validate(user.forgotDigit.Validate), user.forgotDigit.handler);
 
 // child
 const child = require('./controller/child')

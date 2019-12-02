@@ -50,4 +50,10 @@ module.exports = {
       confirmDigit: Joi.array().items(Joi.number()).required(),
     }
   },
+  forgotDigit: {
+    options: { allowUnknownBody: false },
+    body: {
+      email: Joi.string().email().required(),
+    }
+  },
 }

@@ -8,6 +8,7 @@ const frontend = require('./app/front-end/route');
 const flash = require('connect-flash');
 const cors = require('cors');
 const boom = require('express-boom');
+const errorHelper = require('./app/helper/error');
 require('./app/config/database');
 require('dotenv').config()
 app
@@ -23,7 +24,8 @@ app
   .use('/frontend', frontend)
   .use(function (err, req, res, next) {
     if (err instanceof ev.ValidationError) {
-      res.boom.badData("", err);
+      err.code = 11000;
+      errorHelper(res.boom, err);
     }
   })
   .listen(process.env.PORT || 8081, function (error) {

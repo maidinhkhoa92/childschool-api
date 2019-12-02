@@ -83,7 +83,7 @@ module.exports = {
         lastName: Joi.string().required(),
       }, 
       firstTeacher: Joi.string().required(), 
-      secondTeacher: Joi.string().required(), 
+      secondTeacher: Joi.string().disallow(Joi.ref('firstTeacher')).required(), 
       family: {
         profile: {
           firstName: Joi.string().required(),

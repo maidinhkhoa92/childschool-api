@@ -33,6 +33,7 @@
     "msg": "El dígito no coincide",
     "method": "badRequest"
   },
+  "10": "Tienes 1 profesor en los mismos campos.",
   "9997": {
     "msg": "No token",
     "method": "unauthorized"

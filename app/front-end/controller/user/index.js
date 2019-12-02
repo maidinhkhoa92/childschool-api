@@ -149,3 +149,18 @@ module.exports.deactive = {
       });
   }
 };
+
+module.exports.forgotDigit = {
+  Validate: validate.forgotDigit,
+  handler: (req, res) => {
+    const { email } = req.body;
+    user
+      .forgotDigit(email)
+      .then(User => {
+        res.status(200).send(User);
+      })
+      .catch(err => {
+        error(res.boom, err);
+      });
+  }
+}

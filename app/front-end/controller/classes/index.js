@@ -55,7 +55,6 @@ module.exports.addClass = {
 				classes.addClass(id, Child.id, firstTeacher, secondTeacher, data.id).then(Classes => {
 					res.status(200).send(Classes);
 				}).catch(e =>{
-					console.log(e)
 					error(res.boom, e);
 				})
 			}).catch(e =>{

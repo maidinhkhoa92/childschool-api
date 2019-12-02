@@ -154,7 +154,6 @@ const updateNews = (body, ids_child) => {
             const new_childs = await _.map(Childs, item => {
               let pre_news = item.news;
               let sleeping = item.sleeping;
-              let result = {};
               pre_news.unshift(news_id);
               item.news = pre_news;
               if (body.type === "Siesta") {
@@ -214,6 +213,10 @@ const updateAll = (id, body) => {
         ...data.profile,
         ...body.profile
       };
+      data.firstTeacher = body.firstTeacher;
+      data.secondTeacher = body.secondTeacher;
+      data.family = body.family;
+      
       resolve(convertData(data.save()));
     });
   });

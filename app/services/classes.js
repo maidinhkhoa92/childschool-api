@@ -2,6 +2,7 @@
 
 const classes = require('../models/classes');
 const child = require('../models/child');
+const user = require('../models/user');
 const colors = require('../helper/colors');
 const _ = require('lodash');
 
@@ -59,13 +60,20 @@ const create = (userId, body) => {
       color: colors[randomNumber],
       directorId: userId
     }
-
-    classes.create(data, function (err, data) {
-      if (err) {
-        reject(err);
+    user.find({directorId: userId, status: true}, function(error, staffs) {
+      if (error) {
+        reject(error);
+        return
       }
-      resolve(convertData(data));
-    });
+      data.teacher = _.map(staffs, item => item._id);
+      classes.create(data, function (err, data) {
+        if (err) {
+          reject(err);
+          return
+        }
+        resolve(convertData(data));
+      });
+    })
   })
 }
 
@@ -164,14 +172,14 @@ const addClass = (id, childId, teacher_id_1, teacher_id_2, family_id) => {
       Classes.child = child_classes;
 
       // check if teacher or family exist
-      if(!_.includes(teacher_classes.toString(), teacher_id_1)) {
-        teacher_classes.push(teacher_id_1)
-        Classes.teacher = teacher_classes
-      }
-      if(!_.includes(teacher_classes.toString(), teacher_id_2)) {
-        teacher_classes.push(teacher_id_2)
-        Classes.teacher = teacher_classes
-      }
+      // if(!_.includes(teacher_classes.toString(), teacher_id_1)) {
+      //   teacher_classes.push(teacher_id_1)
+      //   Classes.teacher = teacher_classes
+      // }
+      // if(!_.includes(teacher_classes.toString(), teacher_id_2)) {
+      //   teacher_classes.push(teacher_id_2)
+      //   Classes.teacher = teacher_classes
+      // }
       if(_.includes(family_classes, family_id) === -1) {
         family_classes.push(family_id)
         Classes.family = family_classes

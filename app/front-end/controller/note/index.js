@@ -32,10 +32,9 @@ module.exports.update = {
 	Validate: validate.update,
 	handler: (req, res) => {
 		const body = req.body;
-		const user_id = req.decoded.id;
         const { id } = req.params;
 		
-		note.update(id, user_id, body).then(Note => {
+		note.update(id, body).then(Note => {
 			res.status(200).send(Note);
 		}).catch(err => {
 			error(res.boom, err);

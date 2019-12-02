@@ -61,19 +61,20 @@ const create = (userId, body) => {
   })
 }
 
-const update = (id, userId, body) => {
+const update = (id, body) => {
   return new Promise((resolve, reject) => {
     const query = {
-      _id: id,
-      familyId: userId
+      _id: id
     };
-    const data = body;
 
-    note.findOneAndUpdate(query, data, { new: true }, function (err, data) {
+    note.findOne(query, function (err, Note) {
       if (err) {
         reject(err);
+        return
       }
-      resolve(convertData(data));
+      Note.time = body.time;
+      Note.save();
+      resolve(convertData(Note));
     });
   })
 }

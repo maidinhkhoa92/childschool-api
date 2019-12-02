@@ -85,7 +85,6 @@ const create = body => {
       const initNotes = _.map(defaultNotes, item =>
         _.extend({ childId: data.id }, item)
       );
-      console.log(initNotes);
       note
         .insertMany(initNotes)
         .then(function(newNotes) {

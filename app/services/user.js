@@ -161,7 +161,7 @@ const forgotDigit = (email) => {
       from: 'admin@gmail.com',
       to: email,
       subject: 'Reset Digit',
-      html: `<p>New digit: ${JSON.stringify(digit)}</p>`
+      html: mailTemplate.forgot.content(JSON.stringify(digit))
     };
     user.findOne({email: email}, function(err, data) {
       if(err) {

@@ -22,7 +22,7 @@
     "method": "unauthorized"
   },
   "7": {
-    "msg": "!Revisa que coincida tu PIN !",
+    "msg": "¡PIN INCORRECTO!",
     "method": "unauthorized"
   },
   "8": {

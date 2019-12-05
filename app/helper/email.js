@@ -22,3 +22,11 @@ module.exports.director = {
     <p>Un saludo.</p>
     `
 }
+
+module.exports.forgot = {
+    subject: 'Mírate esta novedosa web',
+    content: (digit) => (`
+    <p>Hola! Introduce este nuevo PIN temporal ${digit} para crear uno nuevo que puedas recordar fácilmente.</a>
+    <p>Un saludo.</p>
+    `)
+}

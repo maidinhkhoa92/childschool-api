@@ -1,8 +1,9 @@
 const error = require('./error.json');
 module.exports = function (boom, Error) {
+  console.log(Error)
   switch (Error.code) {
     case 11000:
-      const message = error[duplicator(Error.errors[0].messages[0])]
+      const message = error[duplicator(Error.message, Error)]
       boom.conflict(message);
       break;
     default:
@@ -12,15 +13,17 @@ module.exports = function (boom, Error) {
   }
 }
 
-const duplicator = (error_message) => {
+const duplicator = (error_message, error) => {
   if (error_message.includes("username_1")) {
     return 1;
   }
   if (error_message.includes("email_1")) {
     return 1;
   }
-  if (error_message.includes('"secondTeacher" contains an invalid value')) {
-    return 10;
+  if (error_message.includes('validation error')) {
+    if(error.errors[0].messages[0].includes('"secondTeacher" contains an invalid value')) {
+      return 10;
+    }
   }
   return 0;
 }

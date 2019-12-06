@@ -10,7 +10,6 @@ module.exports.list = {
 		note.list(paged, limit).then(data => {
 			res.status(200).send(data);
 		}).catch(err => {
-			console.log(err)
 			error(res.boom, err);
 		});
 	}

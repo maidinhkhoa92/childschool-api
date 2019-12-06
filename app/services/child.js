@@ -88,7 +88,6 @@ const create = body => {
       note
         .insertMany(initNotes)
         .then(function(newNotes) {
-          console.log(newNotes);
           resolve(convertData(data));
         })
         .catch(function(err) {

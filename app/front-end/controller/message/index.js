@@ -46,7 +46,6 @@ module.exports.update = {
         res.status(200).send(data);
       })
       .catch(err => {
-        console.log(err);
         error(res.boom, err);
       });
   }

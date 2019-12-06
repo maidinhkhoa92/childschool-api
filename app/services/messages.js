@@ -31,7 +31,7 @@ const list = (paged, limit, userId, type = "director", classId = null) => {
       query = query.or([{ to: { "$in" : [userId]} }, { classes: { "$in" : [classId]} }]);
     }
 
-    query.populate([
+    query.sort({created_at: 'desc'}).populate([
       {
         path: 'from',
         select: '-password'
@@ -113,7 +113,6 @@ const update = async (message_id, ref_id, current_message, old_message, user_id)
     user_id: current_user._id.toString(),
     email: current_user.email
   }]
-  console.log(firestoreParams)
   
   await ref.doc(ref_id).update({message: firestoreParams});
   

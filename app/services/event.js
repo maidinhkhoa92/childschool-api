@@ -87,7 +87,6 @@ const remove = id => {
 
 const detail = id => {
   return new Promise((resolve, reject) => {
-    console.log(id)
     event.findById(id, function(err, data) {
       if (err) {
         reject(err);

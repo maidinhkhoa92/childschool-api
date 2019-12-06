@@ -40,7 +40,6 @@ module.exports.create = {
 		classes.create(directorId, params).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			console.log(err)
 			error(res.boom, err);
 		});
 	}

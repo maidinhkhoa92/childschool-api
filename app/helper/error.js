@@ -1,6 +1,5 @@
 const error = require('./error.json');
 module.exports = function (boom, Error) {
-  console.log(Error)
   switch (Error.code) {
     case 11000:
       const message = error[duplicator(Error.message, Error)]
@@ -14,6 +13,7 @@ module.exports = function (boom, Error) {
 }
 
 const duplicator = (error_message, error) => {
+  console.log(error.errors[0].messages[0])
   if (error_message.includes("username_1")) {
     return 1;
   }

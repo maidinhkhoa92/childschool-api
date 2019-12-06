@@ -7,7 +7,6 @@ module.exports.list = {
 		const { id } = req.decoded;
 		const { director } = req.query;
 		const check_id = director || id;
-		console.log(check_id);
 		menu.list(check_id).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {

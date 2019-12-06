@@ -15,12 +15,11 @@ const list = (paged, limit, childId) => {
       const skip = (paged - 1) * limit;
       query = query.skip(skip);
     }
-    console.log(childId)
     if (childId) {
       query = query.where('childId').equals(childId)
     }
 
-    query.sort({date: -1}).exec(function (err, data) {
+    query.sort({date: -1}).populate('familyId').exec(function (err, data) {
         if (err) {
           reject(err);
           return;

@@ -55,6 +55,10 @@ const list = (paged, limit, id, type, class_id) => {
       query = query.where("classes").equals(class_id);
     }
 
+    if (type && type === "director") {
+      query = query.where("directorId").equals(id);
+    }
+
     query.sort({ date: -1 }).exec(function(err, data) {
       if (err) {
         reject(err);
@@ -62,7 +66,6 @@ const list = (paged, limit, id, type, class_id) => {
       if (data === null) {
         reject({ code: 10000 });
       }
-
       const result = {
         paged: paged,
         limit: limit,

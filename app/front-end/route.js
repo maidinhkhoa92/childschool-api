@@ -33,13 +33,6 @@ router.patch('/child/:id', Token, validate(child.updateStatus.Validate), child.u
 router.put('/child-person/:id', Token, validate(child.updateChildPerson.Validate), child.updateChildPerson.handler);
 router.post('/search-child', Token, validate(child.search.Validate), child.search.handler);
 
-// note
-const note = require('./controller/note');
-
-router.get('/note', Token, note.list.handler);
-router.post('/note', Token, validate(note.create.Validate), note.create.handler);
-router.put('/note/:id', Token, validate(note.update.Validate), note.update.handler);
-
 // classes
 const classes = require('./controller/classes');
 

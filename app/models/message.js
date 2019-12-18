@@ -13,6 +13,10 @@ const schema = new Schema({
 		default: 'user',
 	},
 	message: String,
+	note: {
+		type: String,
+		default: ''
+	},
 	firestore: String,
 })
 

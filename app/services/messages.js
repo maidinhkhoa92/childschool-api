@@ -23,12 +23,8 @@ const list = (paged, limit, userId, type = "director", classId = null) => {
       query = query.where('from').equals(userId);
     }
 
-    if (type === "staff") {
-      query = query.or([{ from: userId }, { classes: { "$in" : [classId]} }]);
-    }
-
-    if (type === "family") {
-      query = query.or([{ to: { "$in" : [userId]} }, { classes: { "$in" : [classId]} }]);
+    if (type === "family" || type === "staff") {
+      query = query.or([{from: userId}, { to: { "$in" : [userId]} }, { classes: { "$in" : [classId]} }]);
     }
 
     query.sort({created_at: 'desc'}).populate([
@@ -64,14 +60,15 @@ const list = (paged, limit, userId, type = "director", classId = null) => {
   })
 }
 
-const create = async (from, to, new_message, classes, type) => {
+const create = async (from, to, new_message, classes, type, note = "") => {
     // create new message
     const messageParams = {
         from: from,
         to: to,
         classes: classes,
         type: type,
-        message: new_message
+        message: new_message,
+        note: note
     }   
     const Message = new message(messageParams);
     await Message.save();

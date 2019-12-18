@@ -6,9 +6,9 @@ const validate = require("./validate");
 module.exports.create = {
   Validate: validate.create,
   handler: (req, res) => {
-    const { message, from_user, to_user, classes, type } = req.body;
+    const { message, from_user, to_user, classes, type, note } = req.body;
     messages
-      .create(from_user, to_user, message, classes, type)
+      .create(from_user, to_user, message, classes, type, note)
       .then(data => {
         res.status(200).send(data);
       })

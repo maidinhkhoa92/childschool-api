@@ -42,10 +42,4 @@ router.post('/classes', Token, validate(classes.create.Validate), classes.create
 router.put('/classes/:id', Token, validate(classes.update.Validate), classes.update.handler);
 router.delete('/classes/:id', Token, classes.remove.handler);
 
-// note
-const note = require('./controller/note');
-
-router.get('/note', Token, note.list.handler);
-router.delete('/note/:id', Token, note.remove.handler);
-
 module.exports = router;

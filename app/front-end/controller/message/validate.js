@@ -8,6 +8,7 @@ module.exports = {
       to_user: Joi.array().items(Joi.string()).required(),
       classes: Joi.array().items(Joi.string()).required(),
       type: Joi.string().required().valid('class', 'user'),
+      note: Joi.string().optional().allow('')
     }
   },
   update: {

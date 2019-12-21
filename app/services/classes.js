@@ -142,12 +142,25 @@ const detail = (id, userId, type = "director") => {
 
 const remove = (id) => {
   return new Promise((resolve, reject) => {
-    classes.remove({_id: id}, function (err) {
-      if (err) {
-        reject(err);
+    classes.findById(id, function(error, Classes) {
+      if(error) {
+        reject(error);
+        return;
       }
-      resolve({status: 'done'});
-    });
+      child.remove({_id: {$in: Classes.child}}, function(Err) {
+        if(error) {
+          reject(error);
+          return;
+        }
+        classes.remove({_id: id}, function (err) {
+          if (err) {
+            reject(err);
+            return;
+          }
+          resolve({status: 'done'});
+        });
+      })
+    })
   })
 }
 

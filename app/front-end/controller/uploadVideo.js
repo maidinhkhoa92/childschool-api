@@ -7,8 +7,8 @@ const imageFilter = function(req, file, cb) {
   if (!file.originalname.match(/\.(mp4)$/)) {
     return cb(new Error("Only Video files are allowed!"), false);
   }
-  if (file.size > 5000000) {
-    return cb(new Error("Size : 1mb"), false);
+  if (file.size > 500000) {
+    return cb(new Error("Size : 500KB"), false);
   }
   cb(null, true);
 };

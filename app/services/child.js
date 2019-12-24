@@ -8,7 +8,7 @@ const search = (word, id, type) => {
   return new Promise((resolve, reject) => {
     var query = child.find();
     query = query.where("profile.firstName").equals({
-      $regex: new RegExp(word, "ig")
+      $regex: new RegExp(`^${word}`, "ig")
     });
     if (type && type === "staff") {
       query = query.or([{ firstTeacher: id }, { secondTeacher: id }]);
@@ -20,9 +20,11 @@ const search = (word, id, type) => {
     query.sort({ date: -1 }).exec(function(err, data) {
       if (err) {
         reject(err);
+        return;
       }
       if (data === null) {
         reject({ code: 10000 });
+        return;
       }
       const result = _.map(data, item => {
         return convertData(item);

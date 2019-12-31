@@ -22,12 +22,7 @@ app
   .use("/videos", express.static(__dirname + '/videos'))
   .use('/backend', backend)
   .use('/frontend', frontend)
-  .use(function (err, req, res, next) {
-    if (err instanceof ev.ValidationError) {
-      err.code = 11000;
-      errorHelper(res.boom, err);
-    }
-  })
+  .use(errorHelper)
   .listen(process.env.PORT || 8081, function (error) {
     if (error) throw error;
     app.get('/', function (req, res) {

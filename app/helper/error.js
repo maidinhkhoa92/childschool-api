@@ -1,15 +1,12 @@
-const error = require('./error.json');
-module.exports = function (boom, Error) {
-  switch (Error.code) {
-    case 11000:
-      const message = error[duplicator(Error.message, Error)]
-      boom.conflict(message);
-      break;
-    default:
-      const result = error[Error.code];
-      boom[result.method](result.msg);
-      break;
+const error_data = require('./error.json');
+module.exports = function (err, req, res, next) {
+  if (err.name === "ValidationError") {
+    res.boom.badRequest(err.errors[0].messages[0]);
+  } else {
+    const result = error_data[err.code];
+    res.boom[result.method](result.msg);
   }
+  
 }
 
 const duplicator = (error_message, error) => {

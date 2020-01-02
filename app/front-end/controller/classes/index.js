@@ -11,7 +11,7 @@ module.exports.list = {
 		classes.list(null, null, id, type).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 };
@@ -25,7 +25,7 @@ module.exports.create = {
 		classes.create(id, body).then(Note => {
 			res.status(200).send(Note);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 };
@@ -61,7 +61,7 @@ module.exports.addClass = {
 				error(res.boom, e);
 			})
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		})
 	}
 };
@@ -73,7 +73,7 @@ module.exports.removeClass = {
 		classes.removeClass(class_id, child_id).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 }
@@ -87,7 +87,7 @@ module.exports.detail = {
 		classes.detail(id, user_id, type).then(Note => {
 			res.status(200).send(Note);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 };
@@ -102,7 +102,7 @@ module.exports.updateInfor = {
 		classes.update(id, userId, body).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 };
@@ -114,7 +114,7 @@ module.exports.remove = {
 		classes.remove(id).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 };

@@ -13,7 +13,7 @@ module.exports.updatePassword = {
         res.status(200).send(User);
       })
       .catch(err => {
-        error(res.boom, err);
+        next(err);
       });
   }
 };
@@ -29,7 +29,7 @@ module.exports.login = {
         res.status(200).send(data);
       })
       .catch(err => {
-        error(res.boom, err);
+        next(err);
       });
   }
 };
@@ -46,7 +46,7 @@ module.exports.updateDigit = {
         res.status(200).send(data);
       })
       .catch(err => {
-        error(res.boom, err);
+        next(err);
       });
   }
 };
@@ -63,7 +63,7 @@ module.exports.compareDigit = {
         res.status(200).send(data);
       })
       .catch(err => {
-        error(res.boom, err);
+        next(err);
       });
   }
 };
@@ -80,7 +80,7 @@ module.exports.changeDigit = {
         res.status(200).send(data);
       })
       .catch(err => {
-        error(res.boom, err);
+        next(err);
       });
   }
 };
@@ -97,7 +97,7 @@ module.exports.update = {
         res.status(200).send(User);
       })
       .catch(err => {
-        error(res.boom, err);
+        next(err);
       });
   }
 };
@@ -114,7 +114,7 @@ module.exports.create = {
         res.status(200).send(User);
       })
       .catch(err => {
-        error(res.boom, err);
+        next(err);
       });
   }
 };
@@ -129,7 +129,7 @@ module.exports.list = {
         res.status(200).send(User);
       })
       .catch(err => {
-        error(res.boom, err);
+        next(err);
       });
   }
 };
@@ -145,7 +145,7 @@ module.exports.deactive = {
         res.status(200).send(User);
       })
       .catch(err => {
-        error(res.boom, err);
+        next(err);
       });
   }
 };
@@ -160,7 +160,7 @@ module.exports.forgotDigit = {
         res.status(200).send(User);
       })
       .catch(err => {
-        error(res.boom, err);
+        next(err);
       });
   }
 }

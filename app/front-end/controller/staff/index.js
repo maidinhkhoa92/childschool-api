@@ -14,7 +14,7 @@ module.exports.update = {
         res.status(200).send(User);
       })
       .catch(err => {
-        error(res.boom, err);
+        next(err);
       });
   }
 };
@@ -31,7 +31,7 @@ module.exports.create = {
         res.status(200).send(User);
       })
       .catch(err => {
-        error(res.boom, err);
+        next(err);
       });
   }
 };
@@ -46,7 +46,7 @@ module.exports.list = {
         res.status(200).send(User);
       })
       .catch(err => {
-        error(res.boom, err);
+        next(err);
       });
   }
 };
@@ -62,7 +62,7 @@ module.exports.deactive = {
         res.status(200).send(User);
       })
       .catch(err => {
-        error(res.boom, err);
+        next(err);
       });
   }
 };

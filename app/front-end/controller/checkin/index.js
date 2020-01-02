@@ -8,7 +8,7 @@ module.exports.list = {
 		checkin.list(id).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 }
@@ -23,7 +23,7 @@ module.exports.create = {
 			res.status(200).send(Data);
 		}).catch(err => {
 			console.log(err)
-			error(res.boom, err);
+			next(err);
 		});
 	}
 };
@@ -37,7 +37,7 @@ module.exports.update = {
 		checkin.update(id, body).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 };

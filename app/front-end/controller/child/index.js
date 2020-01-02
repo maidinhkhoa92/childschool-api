@@ -10,7 +10,7 @@ module.exports.list = {
 		child.list(null, null, id, type, class_id ).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 };
@@ -22,7 +22,7 @@ module.exports.detail = {
 		child.detail(id).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 };
@@ -36,7 +36,7 @@ module.exports.update = {
 		child.update(id, profile).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 };
@@ -49,7 +49,7 @@ module.exports.updateNews = {
 		child.updateNews(news, ids).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 };
@@ -62,7 +62,7 @@ module.exports.updateStatus = {
 		child.updateStatus(req.body, id).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 };
@@ -94,7 +94,7 @@ module.exports.updateChildPerson = {
 				error(res.boom, e);
 			})
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		})
 	}
 };
@@ -107,7 +107,7 @@ module.exports.search = {
 		child.search(word, id, type).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 };

@@ -11,7 +11,7 @@ module.exports.list = {
 		event.list(paged, limit).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 }
@@ -23,7 +23,7 @@ module.exports.detail = {
 		event.detail(id).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 }
@@ -36,7 +36,7 @@ module.exports.create = {
 		event.create(body).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 }
@@ -50,7 +50,7 @@ module.exports.update = {
 		event.update(id, body).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 }
@@ -62,7 +62,7 @@ module.exports.remove = {
 		event.remove(id).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 }

@@ -20,7 +20,9 @@ module.exports = {
         .required(),
       news: {
         title: Joi.string().required(),
-        time: Joi.string().required(),
+        time: Joi.string()
+          .allow("")
+          .optional(),
         group: Joi.string()
           .allow("")
           .optional(),
@@ -80,24 +82,28 @@ module.exports = {
     body: {
       children: {
         firstName: Joi.string().required(),
-        lastName: Joi.string().required(),
-      }, 
-      firstTeacher: Joi.string().required(), 
-      secondTeacher: Joi.string().disallow(Joi.ref('firstTeacher')).required(), 
+        lastName: Joi.string().required()
+      },
+      firstTeacher: Joi.string().required(),
+      secondTeacher: Joi.string()
+        .disallow(Joi.ref("firstTeacher"))
+        .required(),
       family: {
         profile: {
           firstName: Joi.string().required(),
           lastName: Joi.string().required(),
-          telephone: Joi.string().required(),
+          telephone: Joi.string().required()
         },
-        email: Joi.string().email().required(),
+        email: Joi.string()
+          .email()
+          .required()
       }
     }
   },
   search: {
     options: { allowUnknownBody: false },
     body: {
-      word: Joi.string().required(),
+      word: Joi.string().required()
     }
-  },
+  }
 };

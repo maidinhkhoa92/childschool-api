@@ -35,7 +35,7 @@ module.exports = function (req, res) {
           user.update(req).then(User => {
             res.status(200).send(User);
           }).catch(err => {
-            error(res.boom, err);
+            next(err);
           });
         })
         .catch(err => console.log(err))

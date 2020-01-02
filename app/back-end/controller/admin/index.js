@@ -15,7 +15,7 @@ module.exports.init = {
           res.status(200).send(data);
         })
         .catch(err => {
-          error(res.boom, err);
+          next(err);
         });
     }
 };
@@ -30,7 +30,7 @@ module.exports.login = {
           res.status(200).send(data);
         })
         .catch(err => {
-          error(res.boom, err);
+          next(err);
         });
     }
 };

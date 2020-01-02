@@ -10,7 +10,7 @@ module.exports.list = {
 		menu.list(check_id).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 };
@@ -24,7 +24,7 @@ module.exports.create = {
 		menu.create(id, body).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 };

@@ -11,7 +11,7 @@ module.exports.list = {
 		classes.list(paged, limit).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 }
@@ -23,7 +23,7 @@ module.exports.detail = {
 		classes.detail(id).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 }
@@ -40,7 +40,7 @@ module.exports.create = {
 		classes.create(directorId, params).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 }
@@ -54,7 +54,7 @@ module.exports.update = {
 		classes.update(id, body.directorId, body).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 }
@@ -66,7 +66,7 @@ module.exports.remove = {
 		classes.remove(id).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 }

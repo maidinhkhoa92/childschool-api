@@ -8,7 +8,7 @@ module.exports.list = {
 		news.list(date, type, child_id).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 };

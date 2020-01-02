@@ -9,7 +9,7 @@ module.exports.create = {
 		contact.create(body).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 };

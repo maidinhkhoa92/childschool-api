@@ -10,7 +10,7 @@ module.exports.list = {
 		note.list(paged, limit).then(data => {
 			res.status(200).send(data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 };
@@ -22,7 +22,7 @@ module.exports.remove = {
 		note.remove(id).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {
-			error(res.boom, err);
+			next(err);
 		});
 	}
 };

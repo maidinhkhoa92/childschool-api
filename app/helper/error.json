@@ -50,5 +50,5 @@
     "msg": "No data",
     "method": "notFound"
   },
-  "11000": "This account exists"
+  "11000": "Esta cuenta ya existe"
 }

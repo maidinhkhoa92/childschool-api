@@ -4,7 +4,7 @@ const validate = require("./validate");
 
 module.exports.update = {
   Validate: validate.update,
-  handler: (req, res) => {
+  handler: (req, res, next) => {
     const { body } = req;
     const { id } = req.params;
 
@@ -21,7 +21,7 @@ module.exports.update = {
 
 module.exports.create = {
   Validate: validate.create,
-  handler: (req, res) => {
+  handler: (req, res, next) => {
     const body = req.body;
     const { id } = req.decoded;
 
@@ -37,7 +37,7 @@ module.exports.create = {
 };
 
 module.exports.list = {
-  handler: (req, res) => {
+  handler: (req, res, next) => {
     const { id } = req.decoded;
     const type = "staff";
     user
@@ -52,7 +52,7 @@ module.exports.list = {
 };
 module.exports.deactive = {
   Validate: validate.deactive,
-  handler: (req, res) => {
+  handler: (req, res, next) => {
     const { id } = req.params;
     const { body } = req;
     

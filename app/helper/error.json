@@ -49,5 +49,6 @@
   "10000": {
     "msg": "No data",
     "method": "notFound"
-  }
+  },
+  "11000": "This account exists"
 }

@@ -25,7 +25,7 @@ app
   .use(errorHelper)
   .listen(process.env.PORT || 8081, function (error) {
     if (error) throw error;
-    app.get('/', function (req, res) {
+    app.get('/', function (req, res, next) {
       res.send('Your Web app s running.');
     })
   });

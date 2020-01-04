@@ -5,7 +5,7 @@ const error = require('../../../helper/error');
 const validate = require('./validate');
 
 module.exports.list = {
-	handler: (req, res) => {
+	handler: (req, res, next) => {
 		const { id, type } = req.decoded;
 		
 		classes.list(null, null, id, type).then(Data => {
@@ -18,7 +18,7 @@ module.exports.list = {
 
 module.exports.create = {
 	Validate: validate.create,
-	handler: (req, res) => {
+	handler: (req, res, next) => {
 		const body = req.body;
         const { id } = req.decoded;
 		
@@ -32,7 +32,7 @@ module.exports.create = {
 
 module.exports.addClass = {
 	Validate: validate.update,
-	handler: (req, res) => {
+	handler: (req, res, next) => {
 		const {children, firstTeacher, secondTeacher, family} = req.body;
 		const user_id = req.decoded.id;
 		const { id } = req.params;
@@ -68,7 +68,7 @@ module.exports.addClass = {
 
 module.exports.removeClass = {
 	Validate: validate.removeClass,
-	handler: (req, res) => {
+	handler: (req, res, next) => {
 		const { class_id, child_id } = req.params;
 		classes.removeClass(class_id, child_id).then(Data => {
 			res.status(200).send(Data);
@@ -79,7 +79,7 @@ module.exports.removeClass = {
 }
 
 module.exports.detail = {
-	handler: (req, res) => {
+	handler: (req, res, next) => {
 		const user_id = req.decoded.id;
 		const type = req.decoded.type;
 		const { id } = req.params;
@@ -94,7 +94,7 @@ module.exports.detail = {
 
 module.exports.updateInfor = {
 	Validate: validate.updateInfor,
-	handler: (req, res) => {
+	handler: (req, res, next) => {
 		const { id } = req.params;
 		const userId = req.decoded.id;
 		const body = req.body;
@@ -108,7 +108,7 @@ module.exports.updateInfor = {
 };
 
 module.exports.remove = {
-	handler: (req, res) => {
+	handler: (req, res, next) => {
 		const { id } = req.params;
 		
 		classes.remove(id).then(Data => {

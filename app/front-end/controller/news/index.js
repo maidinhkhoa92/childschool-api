@@ -2,7 +2,7 @@ const news = require("../../../services/news");
 const error = require('../../../helper/error');
 
 module.exports.list = {
-	handler: (req, res) => {
+	handler: (req, res, next) => {
 		const { date, child_id, type } = req.query;
 		
 		news.list(date, type, child_id).then(Data => {

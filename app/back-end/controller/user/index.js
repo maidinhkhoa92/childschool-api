@@ -4,7 +4,7 @@ const validate = require("./validate");
 
 module.exports.create = {
   Validate: validate.create,
-  handler: (req, res) => {
+  handler: (req, res, next) => {
     const body = req.body;
 
     user
@@ -19,7 +19,7 @@ module.exports.create = {
 };
 
 module.exports.list = {
-  handler: (req, res) => {
+  handler: (req, res, next) => {
     var { paged, limit } = req.query;
     paged = parseInt(paged);
     limit = parseInt(limit);
@@ -36,7 +36,7 @@ module.exports.list = {
 };
 
 module.exports.detail = {
-  handler: (req, res) => {
+  handler: (req, res, next) => {
     const { id } = req.params;
 
     user
@@ -52,7 +52,7 @@ module.exports.detail = {
 
 module.exports.update = {
   Validate: validate.create,
-  handler: (req, res) => {
+  handler: (req, res, next) => {
     const { body } = req;
     const { id } = req.params;
 
@@ -68,7 +68,7 @@ module.exports.update = {
 };
 
 module.exports.delete = {
-  handler: (req, res) => {
+  handler: (req, res, next) => {
     const { id } = req.params;
 
     user

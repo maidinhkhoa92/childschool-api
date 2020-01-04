@@ -4,7 +4,7 @@ const error = require('../../../helper/error');
 const validate = require('./validate');
 
 module.exports.list = {
-	handler: (req, res) => {
+	handler: (req, res, next) => {
 		const { id, type } = req.decoded;
 		const { class_id } = req.query;
 		child.list(null, null, id, type, class_id ).then(Data => {
@@ -16,7 +16,7 @@ module.exports.list = {
 };
 
 module.exports.detail = {
-	handler: (req, res) => {
+	handler: (req, res, next) => {
 		const { id } = req.params;
 		
 		child.detail(id).then(Data => {
@@ -29,7 +29,7 @@ module.exports.detail = {
 
 module.exports.update = {
 	Validate: validate.update,
-	handler: (req, res) => {
+	handler: (req, res, next) => {
 		const { id } = req.params;
 		const {profile} = req.body
 		
@@ -43,7 +43,7 @@ module.exports.update = {
 
 module.exports.updateNews = {
 	Validate: validate.updateNews,
-	handler: (req, res) => {
+	handler: (req, res, next) => {
 		const {ids, news} = req.body
 		
 		child.updateNews(news, ids).then(Data => {
@@ -56,7 +56,7 @@ module.exports.updateNews = {
 
 module.exports.updateStatus = {
 	Validate: validate.updateStatus,
-	handler: (req, res) => {
+	handler: (req, res, next) => {
 		const { id } = req.params;
 		
 		child.updateStatus(req.body, id).then(Data => {
@@ -69,7 +69,7 @@ module.exports.updateStatus = {
 
 module.exports.updateChildPerson = {
 	Validate: validate.updateChildPerson,
-	handler: (req, res) => {
+	handler: (req, res, next) => {
 		const {children, firstTeacher, secondTeacher, family} = req.body;
 		const user_id = req.decoded.id;
 		const { id } = req.params;
@@ -101,7 +101,7 @@ module.exports.updateChildPerson = {
 
 module.exports.search = {
 	Validate: validate.search,
-	handler: (req, res) => {
+	handler: (req, res, next) => {
 		const { word } = req.body;
 		const { id, type } = req.decoded;
 		child.search(word, id, type).then(Data => {

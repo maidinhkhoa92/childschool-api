@@ -4,7 +4,7 @@ const validate = require("./validate");
 
 module.exports.updatePassword = {
   Validate: validate.updatePassword,
-  handler: (req, res) => {
+  handler: (req, res, next) => {
     const { email, password, confirm } = req.body;
     
     user
@@ -87,7 +87,7 @@ module.exports.changeDigit = {
 
 module.exports.update = {
   Validate: validate.update,
-  handler: (req, res) => {
+  handler: (req, res, next) => {
     const { body } = req;
     const { id } = req.params;
     body.completed = true;
@@ -104,7 +104,7 @@ module.exports.update = {
 
 module.exports.create = {
   Validate: validate.create,
-  handler: (req, res) => {
+  handler: (req, res, next) => {
     const body = req.body;
     const { id } = req.decoded;
 
@@ -120,7 +120,7 @@ module.exports.create = {
 };
 
 module.exports.list = {
-  handler: (req, res) => {
+  handler: (req, res, next) => {
     const { id } = req.decoded;
 
     user
@@ -135,7 +135,7 @@ module.exports.list = {
 };
 module.exports.deactive = {
   Validate: validate.deactive,
-  handler: (req, res) => {
+  handler: (req, res, next) => {
     const { id } = req.params;
     
     user
@@ -151,7 +151,7 @@ module.exports.deactive = {
 
 module.exports.forgotDigit = {
   Validate: validate.forgotDigit,
-  handler: (req, res) => {
+  handler: (req, res, next) => {
     const { email } = req.body;
     user
       .forgotDigit(email)

@@ -3,7 +3,7 @@ const error = require('../../../helper/error');
 const validate = require('./validate');
 
 module.exports.list = {
-	handler: (req, res) => {
+	handler: (req, res, next) => {
 		const { class_id, date } = req.query;
 		event.list(1, 10, class_id, date).then(Data => {
 			res.status(200).send(Data);
@@ -15,7 +15,7 @@ module.exports.list = {
 
 module.exports.create = {
 	Validate: validate.create,
-	handler: (req, res) => {
+	handler: (req, res, next) => {
         const body = req.body;
 		
 		event.create(body).then(Data => {
@@ -27,7 +27,7 @@ module.exports.create = {
 };
 
 module.exports.remove = {
-	handler: (req, res) => {
+	handler: (req, res, next) => {
 		const { id } = req.params;
 		
 		event.remove(id).then(Data => {
@@ -40,7 +40,7 @@ module.exports.remove = {
 
 module.exports.update = {
 	Validate: validate.create,
-	handler: (req, res) => {
+	handler: (req, res, next) => {
 		const { id } = req.params;
 		const { body } = req;
 		
@@ -53,7 +53,7 @@ module.exports.update = {
 }
 
 module.exports.detail = {
-	handler: (req, res) => {
+	handler: (req, res, next) => {
 		const { id } = req.params;
 		event.detail(id).then(Data => {
 			res.status(200).send(Data);

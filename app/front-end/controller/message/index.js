@@ -5,7 +5,7 @@ const validate = require("./validate");
 
 module.exports.create = {
   Validate: validate.create,
-  handler: (req, res) => {
+  handler: (req, res, next) => {
     const { message, from_user, to_user, classes, type, note } = req.body;
     messages
       .create(from_user, to_user, message, classes, type, note)
@@ -19,7 +19,7 @@ module.exports.create = {
 };
 
 module.exports.list = {
-  handler: (req, res) => {
+  handler: (req, res, next) => {
     const { id, type } = req.decoded;
     const { class_id } = req.query
 
@@ -36,7 +36,7 @@ module.exports.list = {
 
 module.exports.update = {
   Validate: validate.update,
-  handler: (req, res) => {
+  handler: (req, res, next) => {
     const { id } = req.params;
     const { oldMessage, currentMessage, firestore } = req.body;
     const user_id = req.decoded.id

@@ -23,7 +23,7 @@ const storage = multer.diskStorage({
   }
 });
 
-module.exports = function(req, res) {
+module.exports = function(req, res, next) {
   if (!fs.existsSync('videos')){
     fs.mkdirSync('videos');
   }

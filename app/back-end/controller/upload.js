@@ -15,7 +15,7 @@ const imageFilter = function (req, file, cb) {
 };
 
 
-module.exports = function (req, res) {
+module.exports = function (req, res, next) {
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, 'uploads');

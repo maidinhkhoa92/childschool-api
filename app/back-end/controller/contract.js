@@ -2,7 +2,7 @@ const contract = require('../../services/contact');
 const error = require('../../helper/error');
 
 module.exports.list = {
-	handler: function (req, res) {
+	handler: function (req, res, next) {
         var { paged, limit } = req.query;
         paged = parseInt(paged);
         limit = parseInt(limit);
@@ -16,7 +16,7 @@ module.exports.list = {
 };
 
 module.exports.remove = {
-	handler: (req, res) => {
+	handler: (req, res, next) => {
 		const { id } = req.params;
 		
 		contract.remove(id).then(Data => {

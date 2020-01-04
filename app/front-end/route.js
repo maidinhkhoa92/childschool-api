@@ -21,6 +21,7 @@ router.patch('/user/:id', Token, validate(user.deactive.Validate), user.deactive
 router.post('/user/compare-digit', Token, validate(user.compareDigit.Validate), user.compareDigit.handler);
 router.post('/user/change-digit', Token, validate(user.changeDigit.Validate), user.changeDigit.handler);
 router.post('/user/forgot-digit', Token, validate(user.forgotDigit.Validate), user.forgotDigit.handler);
+router.delete('/user/:id', Token, user.deactive.handler);
 
 // child
 const child = require('./controller/child')

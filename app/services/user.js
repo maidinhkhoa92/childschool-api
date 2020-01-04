@@ -404,5 +404,6 @@ module.exports = {
   findByEmailAndCreate,
   center,
   changeDigit,
-  forgotDigit
+  forgotDigit,
+  remove
 };

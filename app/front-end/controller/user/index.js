@@ -137,10 +137,9 @@ module.exports.deactive = {
   Validate: validate.deactive,
   handler: (req, res) => {
     const { id } = req.params;
-    const { body } = req;
     
     user
-      .update(id, body)
+      .remove(id)
       .then(User => {
         res.status(200).send(User);
       })

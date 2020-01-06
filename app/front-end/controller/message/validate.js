@@ -3,7 +3,7 @@ module.exports = {
   create: {
     options: { allowUnknownBody: false },
     body: {
-      message: Joi.string().required(),
+      message: Joi.string().optional().allow(''),
       from_user: Joi.string().required(),
       to_user: Joi.array().items(Joi.string()).required(),
       classes: Joi.array().items(Joi.string()).required(),

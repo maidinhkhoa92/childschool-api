@@ -221,15 +221,23 @@ const removeClass = (classId, childId) => {
   return new Promise((resolve, reject) => {
     classes.findById(classId, function(err, Classes) {
       if(err) {
-        reject(err)
+        reject(err);
+        return;
       }
 
-      var child = Classes.child;
-      Classes.child = _.filter(child, item => {
+      var childClasses = Classes.child;
+      Classes.child = _.filter(childClasses, item => {
         return item != childId
       })
+      Classes.save()
 
-      resolve(convertData(Classes.save()));
+      child.deleteOne({ _id: childId }, function(err) {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve(convertData(Classes));
+      });
     })
   })
 }

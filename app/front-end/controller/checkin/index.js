@@ -1,4 +1,5 @@
 const checkin = require('../../../services/checkin');
+const user = require('../../../services/user');
 const error = require('../../../helper/error');
 const validate = require('./validate');
 
@@ -15,10 +16,17 @@ module.exports.list = {
 
 module.exports.create = {
 	Validate: validate.create,
-	handler: (req, res, next) => {
+	handler: async (req, res, next) => {
 		const body = req.body;
-		const { id } = req.decoded;
-		body.director = id;
+		const { id, type } = req.decoded;
+		if(type === 'director') {
+			body.director = id;
+		}
+		if(type === 'staff') {
+			const staff = await user.detail(id);
+			body.director = staff.directorId
+		}
+		
 		checkin.createOrUpdate(body).then(Data => {
 			res.status(200).send(Data);
 		}).catch(err => {

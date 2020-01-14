@@ -20,9 +20,7 @@ module.exports = {
         .required(),
       news: {
         title: Joi.string().required(),
-        time: Joi.string()
-          .allow("")
-          .optional(),
+        time: Joi.string().required(),
         group: Joi.string()
           .allow("")
           .optional(),

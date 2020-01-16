@@ -5,6 +5,10 @@ module.exports = function (err, req, res, next) {
       res.boom.badRequest('el tutor está repetido')
     } if( err.errors[0].messages[0] === '"time" is not allowed to be empty'){ 
       res.boom.badRequest('Selecciona la hora')
+    } if( err.errors[0].messages[0] === '"title" is not allowed to be empty' && req.body.news.type === "Medicines"){ 
+      res.boom.badRequest('Falta el nombre de la medicina')
+    } if( err.errors[0].messages[0] === '"title" is not allowed to be empty' && req.body.news.type === "Incidents"){ 
+      res.boom.badRequest('Diga el tipo de incidente')
     } else {
       res.boom.badRequest(err.errors[0].messages[0]);
     }

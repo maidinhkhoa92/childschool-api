@@ -19,6 +19,6 @@
     "databaseURL": "https://childschool-webapp.firebaseio.com",
     "projectId": "childschool-webapp"
   },
-  "registerWebAppUrl": "https://childschool-webapp.firebaseapp.com/register",
+  "registerWebAppUrl": "https://www.myontabb.com/register",
   "uploadUrl": "http://127.0.0.1:8081/"
 }

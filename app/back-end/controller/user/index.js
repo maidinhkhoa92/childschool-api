@@ -20,12 +20,22 @@ module.exports.create = {
 
 module.exports.list = {
   handler: (req, res, next) => {
-    var { paged, limit } = req.query;
+    let { paged, limit, type, directorId } = req.query;
     paged = parseInt(paged);
     limit = parseInt(limit);
 
+    let params = {};
+
+    if (type) {
+      params.typeOfUser = type;
+    }
+
+    if (directorId) {
+      params.directorId = directorId;
+    }
+
     user
-      .list(paged, limit)
+      .list(paged, limit, params)
       .then(User => {
         res.status(200).send(User);
       })

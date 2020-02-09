@@ -1,5 +1,4 @@
 const classes = require('../../../services/classes');
-const error = require('../../../helper/error');
 const validate = require('./validate');
 
 module.exports.list = {

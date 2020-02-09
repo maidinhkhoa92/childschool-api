@@ -3,14 +3,14 @@
 const user = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const transporter = require('../config/nodemailer');
-const parameters = require('../config/parameters.json');
-const _ = require('lodash');
-const mailTemplate = require('../helper/email');
+const transporter = require("../config/nodemailer");
+const parameters = require("../config/parameters.json");
+const _ = require("lodash");
+const mailTemplate = require("../helper/email");
 
 const create = (body, directorId) => {
   return new Promise((resolve, reject) => {
-    if(directorId) {
+    if (directorId) {
       body.directorId = directorId;
     }
     user.create(body, function(err, data) {
@@ -20,30 +20,30 @@ const create = (body, directorId) => {
       }
 
       let mailOptions = {
-        from: 'admin@gmail.com',
+        from: "admin@gmail.com",
         to: data.email,
         subject: mailTemplate.director.subject,
         html: mailTemplate.director.content
       };
 
-      if(data.typeOfUser === 'staff') {
+      if (data.typeOfUser === "staff") {
         mailOptions.subject = mailTemplate.staff.subject;
         mailOptions.html = mailTemplate.staff.content;
       }
 
-      if(data.typeOfUser === 'family') {
+      if (data.typeOfUser === "family") {
         mailOptions.subject = mailTemplate.family.subject;
         mailOptions.html = mailTemplate.family.content;
       }
 
-      transporter.sendMail(mailOptions, function(error, info){
+      transporter.sendMail(mailOptions, function(error, info) {
         if (err) {
           reject(error);
           return;
-        } 
+        }
 
         resolve(convertData(data));
-      })
+      });
     });
   });
 };
@@ -84,7 +84,7 @@ const login = (email, password) => {
       .findOne({ email: email }, function(error, User) {
         if (error) {
           reject(error);
-          return
+          return;
         }
 
         if (User === null || User === undefined) {
@@ -94,22 +94,22 @@ const login = (email, password) => {
 
         if (User.active === "New") {
           reject({ code: 6 });
-          return
+          return;
         }
 
         if (User.status === false) {
           reject({ code: 6 });
-          return
+          return;
         }
 
         bcrypt.compare(password, User.password, (err, resonse) => {
           if (err) {
             reject(err);
-            return
+            return;
           }
           if (!resonse) {
             reject({ code: 9999 });
-            return
+            return;
           }
 
           delete User.password;
@@ -154,31 +154,36 @@ const updateDigit = (id, digit) => {
   });
 };
 
-const forgotDigit = (email) => {
+const forgotDigit = email => {
   return new Promise((resolve, reject) => {
-    const digit = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)]
+    const digit = [
+      Math.floor(Math.random() * 10),
+      Math.floor(Math.random() * 10),
+      Math.floor(Math.random() * 10),
+      Math.floor(Math.random() * 10)
+    ];
     let mailOptions = {
-      from: 'admin@gmail.com',
+      from: "admin@gmail.com",
       to: email,
-      subject: 'Reset Digit',
+      subject: "Reset Digit",
       html: mailTemplate.forgot.content(JSON.stringify(digit))
     };
-    user.findOne({email: email}, function(err, data) {
-      if(err) {
+    user.findOne({ email: email }, function(err, data) {
+      if (err) {
         reject(err);
         return;
       }
-      
-      transporter.sendMail(mailOptions, function(error, info){
+
+      transporter.sendMail(mailOptions, function(error, info) {
         if (error) {
           reject(error);
           return;
-        } 
+        }
         data.digit = digit;
         data.save();
         resolve(convertData(data));
-      })
-    })
+      });
+    });
   });
 };
 
@@ -214,21 +219,21 @@ const update = (id, body) => {
   return new Promise((resolve, reject) => {
     const query = {
       _id: id
-    }
-    
+    };
+
     user.findOneAndUpdate(query, body, { new: true }, function(err, data) {
       if (err) {
         reject(err);
       }
-      
+
       resolve(convertData(data));
     });
   });
 };
 
-const list = (paged, limit) => {
+const list = (paged, limit, params = {}) => {
   return new Promise((resolve, reject) => {
-    var query = user.find();
+    var query = user.find(params);
 
     if (limit) {
       query = query.limit(limit);
@@ -239,24 +244,24 @@ const list = (paged, limit) => {
       query = query.skip(skip);
     }
 
-    query.sort({date: -1}).exec(function (err, data) {
+    query.sort({ date: -1 }).exec(function(err, data) {
       if (err) {
         reject(err);
       }
-      if(data === null) {
-        reject({code: 10000})
+      if (data === null) {
+        reject({ code: 10000 });
       }
-      user.count({}, function( err, count){
+      user.count({}, function(err, count) {
         const result = {
           paged: paged,
           limit: limit,
           total: count,
           data: _.map(data, item => {
-            return convertData(item)
+            return convertData(item);
           })
-        }
+        };
         resolve(result);
-      })
+      });
     });
   });
 };
@@ -267,8 +272,8 @@ const detail = id => {
       if (err) {
         reject(err);
       }
-      if(data === null) {
-        reject({code: 10000})
+      if (data === null) {
+        reject({ code: 10000 });
       }
       resolve(convertData(data));
     });
@@ -281,63 +286,62 @@ const remove = id => {
       if (err) {
         reject(err);
       }
-      resolve({status: 'done'});
+      resolve({ status: "done" });
     });
   });
 };
 
 const findByEmailAndCreate = (body, directorId = null) => {
   return new Promise((resolve, reject) => {
-    user.findOne({email: body.email}, function(err, data) {
-      if(err){
-        reject(err)
+    user.findOne({ email: body.email }, function(err, data) {
+      if (err) {
+        reject(err);
         return;
       }
-      if(data === null) {
+      if (data === null) {
         body.directorId = directorId;
         create(body).then(item => {
-          resolve(item)
-        })
+          resolve(item);
+        });
       } else {
         resolve(convertData(data));
       }
-    })
-  })
-}
+    });
+  });
+};
 
 const center = (id, type = null) => {
   return new Promise((resolve, reject) => {
     var query = user.find();
 
-    query = query.where('directorId').equals(id);
+    query = query.where("directorId").equals(id);
 
-    query = query.where('status').equals(true);
+    query = query.where("status").equals(true);
 
-    if(type !== null) {
-      query = query.where('typeOfUser').equals(type);
+    if (type !== null) {
+      query = query.where("typeOfUser").equals(type);
     }
 
-    query.exec(function (err, data) {
+    query.exec(function(err, data) {
       if (err) {
         reject(err);
         return;
       }
-      if(data === null) {
-        reject({code: 10000})
+      if (data === null) {
+        reject({ code: 10000 });
         return;
       }
 
       const result = {
         total: data.length,
         data: _.map(data, item => {
-          return convertData(item)
+          return convertData(item);
         })
-      }
+      };
       resolve(result);
-
     });
-  })
-}
+  });
+};
 
 const changeDigit = (id, oldDigit, newDigit, confirmDigit) => {
   return new Promise((resolve, reject) => {
@@ -358,12 +362,12 @@ const changeDigit = (id, oldDigit, newDigit, confirmDigit) => {
       }
 
       if (JSON.stringify(User.digit) !== JSON.stringify(oldDigit)) {
-        reject({code: 7});
+        reject({ code: 7 });
         return;
       }
 
       if (JSON.stringify(newDigit) !== JSON.stringify(confirmDigit)) {
-        reject({code: 9});
+        reject({ code: 9 });
         return;
       }
 

@@ -2,79 +2,60 @@
 
 const event = require("../models/event");
 const _ = require("lodash");
-const moment = require("moment");
 
-const list = (paged, limit, class_id, time) => {
+module.exports.list = (paged, limit, params = {}) => {
   return new Promise((resolve, reject) => {
-    var query = event.find();
+    var query = event.find(params);
 
     if (limit) {
       query = query.limit(limit);
     }
 
     if (paged) {
-      const skip = (paged - 1) * limit;
-      query = query.skip(skip);
+      const skiped = (paged - 1) * limit;
+      query = query.skip(skiped);
     }
 
-    if (class_id) {
-      query = query.where("group").equals(class_id);
-    }
-
-    if (time) {
-      const startTime = moment(time).startOf('month');
-      const endTime = moment(time).endOf('month');
-      query = query.where("date").gte(startTime).lte(endTime);
-    }
-
-    query.sort({ date: -1 }).populate('group').exec(function(err, data) {
+    query.populate("group").exec(function(err, data) {
       if (err) {
         reject(err);
-        return;
       }
-
       if (data === null) {
         reject({ code: 10000 });
-        return;
       }
+      const result = _.map(data, item => {
+        return convertData(item);
+      });
 
-      const result = {
-        paged: paged,
+      resolve({
+        total: result.length,
         limit: limit,
-        total: data.length,
-        data: _.map(data, item => {
-          return convertData(item);
-        })
-      };
-
-      resolve(result);
+        paged: paged,
+        data: result
+      });
     });
   });
 };
 
-const create = body => {
+module.exports.detail = id => {
   return new Promise((resolve, reject) => {
-    event.create(body, function(err, data) {
-      if (err) {
-        reject(err);
-      }
-      resolve(convertData(data));
-    });
+    event
+      .findById(id)
+      .populate("group")
+      .exec(function(err, data) {
+        if (err) {
+          reject(err);
+        }
+        if (data === null) {
+          reject({ code: 10000 });
+        }
+
+        resolve(convertData(data));
+      });
   });
 };
 
-const update = (id, body) => {
-  return new Promise((resolve, reject) => {
-    event.findByIdAndUpdate(id, body, { new: true }, function(err, data) {
-      if (err) {
-        reject(err);
-      }
-      resolve(convertData(data));
-    });
-  });
-};
-
-const remove = id => {
+module.exports.remove = id => {
   return new Promise((resolve, reject) => {
     event.remove({ _id: id }, function(err) {
       if (err) {
@@ -85,18 +66,7 @@ const remove = id => {
   });
 };
 
-const detail = id => {
-  return new Promise((resolve, reject) => {
-    event.findById(id, function(err, data) {
-      if (err) {
-        reject(err);
-      }
-      resolve(convertData(data));
-    });
-  });
-};
-
-const convertData = data => {
+const convertData = (data, password = true) => {
   var result = data;
   if (data === null || data === undefined) {
     return null;
@@ -105,15 +75,10 @@ const convertData = data => {
     result = data.toObject();
   }
   result.id = data._id;
+  if (password) {
+    delete result.password;
+  }
   delete result._id;
   delete result.__v;
   return result;
-};
-
-module.exports = {
-  list,
-  create,
-  update,
-  remove,
-  detail
 };

@@ -39,18 +39,6 @@ const event = require("./controller/event");
 
 router.get("/event", Token, event.list.handler);
 router.get("/event/:id", Token, event.detail.handler);
-router.post(
-  "/event",
-  Token,
-  validate(event.create.Validate),
-  event.create.handler
-);
-router.put(
-  "/event/:id",
-  Token,
-  validate(event.update.Validate),
-  event.update.handler
-);
 router.delete("/event/:id", Token, event.remove.handler);
 
 // classes
@@ -97,5 +85,17 @@ router.put(
   menu.update.handler
 );
 router.delete("/menu/:id", Token, menu.remove.handler);
+
+// Child
+const child = require("./controller/child");
+
+router.get("/child", Token, child.list.handler);
+router.get("/child/:id", Token, child.detail.handler);
+router.delete("/child/:id", Token, child.remove.handler);
+
+// News
+const news = require("./controller/news");
+
+router.delete("/news/:child_id/:news_id", Token, news.remove.handler);
 
 module.exports = router;

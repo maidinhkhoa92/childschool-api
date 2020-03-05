@@ -33,7 +33,11 @@ module.exports.forgot = {
 
 module.exports.contact = {
   subject: "New Contact",
-  content: email => `
-    <p>Email: ${email}</p>
-    `
+  content: content => `
+    <p>Email: ${content.email}</p>
+    <p>First name: ${content.firstName}</p>
+    <p>Last name: ${content.lastName}</p>
+    <p>Telephone: ${content.telephone}</p>
+    <p>Type: ${content.typeOfUser}</p>
+  `
 };

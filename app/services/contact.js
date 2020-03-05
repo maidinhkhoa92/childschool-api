@@ -16,7 +16,7 @@ const create = body => {
         from: "admin@gmail.com",
         to: parameters.adminMail,
         subject: mailTemplate.contact.subject,
-        html: mailTemplate.contact.content(body.email)
+        html: mailTemplate.contact.content(body)
       };
 
       transporter.sendMail(mailOptions, function(error, info) {

@@ -194,3 +194,18 @@ module.exports.resetPassword = {
       });
   }
 };
+
+module.exports.subcribe = {
+  Validate: validate.subcribe,
+  handler: (req, res, next) => {
+    const { message } = req.body;
+    user
+      .subcribe(message)
+      .then(data => {
+        res.status(200).send(data);
+      })
+      .catch(err => {
+        next(err);
+      });
+  }
+};

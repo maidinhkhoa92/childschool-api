@@ -418,7 +418,6 @@ const forgotPassword = email => {
         html: mailTemplate.forgot.content(link)
       };
       transporter.sendMail(mailOptions, function(error, info) {
-        console.log(error)
         if (error) {
           reject(error);
           return;
@@ -449,6 +448,24 @@ const resetPassword = (email, password) => {
   });
 };
 
+const subcribe = text => {
+  return new Promise((resolve, reject) => {
+    let mailOptions = {
+      from: "info@myontabb.com",
+      to: "info@myontabb.com",
+      subject: "New Subcribe",
+      html: text
+    };
+    transporter.sendMail(mailOptions, function(error, info) {
+      if (error) {
+        reject(error);
+        return;
+      }
+      resolve({ message: "success" });
+    });
+  });
+};
+
 module.exports = {
   create,
   updatePassword,
@@ -465,5 +482,6 @@ module.exports = {
   forgotDigit,
   remove,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  subcribe,
 };

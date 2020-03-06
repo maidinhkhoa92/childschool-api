@@ -23,6 +23,7 @@ router.post('/user/change-digit', Token, validate(user.changeDigit.Validate), us
 router.post('/user/forgot-digit', Token, validate(user.forgotDigit.Validate), user.forgotDigit.handler);
 router.post('/user/forgot-password', validate(user.forgotPassword.Validate), user.forgotPassword.handler);
 router.post('/user/reset-password', Token, validate(user.resetPassword.Validate), user.resetPassword.handler);
+router.post('/user/subcribe', validate(user.subcribe.Validate), user.subcribe.handler);
 router.delete('/user/:id', Token, user.deactive.handler);
 
 // child

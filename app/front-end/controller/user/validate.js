@@ -89,5 +89,11 @@ module.exports = {
     body: {
       password: Joi.string().required()
     }
+  },
+  subcribe: {
+    options: { allowUnknownBody: false },
+    body: {
+      message: Joi.string().required()
+    }
   }
 };

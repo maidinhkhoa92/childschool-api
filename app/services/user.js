@@ -395,6 +395,60 @@ const convertData = (data, password = true) => {
   return result;
 };
 
+const forgotPassword = email => {
+  return new Promise((resolve, reject) => {
+    user.findOne({ email: email }, function(err, data) {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      if (!data) {
+        reject({ code: 8 });
+        return;
+      }
+
+      const token = jwt.sign({ email: data.email }, "token_token_miracles");
+      const link = parameters.changePasswordUrl + token;
+
+      let mailOptions = {
+        from: "info@myontabb.com",
+        to: data.email,
+        subject: mailTemplate.forgot.subject,
+        html: mailTemplate.forgot.content(link)
+      };
+      transporter.sendMail(mailOptions, function(error, info) {
+        console.log(error)
+        if (error) {
+          reject(error);
+          return;
+        }
+
+        resolve(convertData(data));
+      });
+    });
+  });
+};
+
+const resetPassword = (email, password) => {
+  return new Promise((resolve, reject) => {
+    user.findOne({ email: email }, function(err, data) {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      if (!data) {
+        reject({ code: 8 });
+        return;
+      }
+      data.password = bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+      data.save();
+      resolve(convertData(data));
+    });
+  });
+};
+
 module.exports = {
   create,
   updatePassword,
@@ -409,5 +463,7 @@ module.exports = {
   center,
   changeDigit,
   forgotDigit,
-  remove
+  remove,
+  forgotPassword,
+  resetPassword
 };

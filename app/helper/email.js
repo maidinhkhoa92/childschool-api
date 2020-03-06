@@ -41,3 +41,10 @@ module.exports.contact = {
     <p>Type: ${content.typeOfUser}</p>
   `
 };
+
+module.exports.forgot = {
+  subject: "Reset password",
+  content: link => `
+    <p>Please access this link to change your password: ${link}</p>
+  `
+};

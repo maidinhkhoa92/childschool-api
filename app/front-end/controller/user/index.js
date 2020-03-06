@@ -6,7 +6,7 @@ module.exports.updatePassword = {
   Validate: validate.updatePassword,
   handler: (req, res, next) => {
     const { email, password, confirm } = req.body;
-    
+
     user
       .updatePassword(email, password, confirm)
       .then(User => {
@@ -137,7 +137,7 @@ module.exports.deactive = {
   Validate: validate.deactive,
   handler: (req, res, next) => {
     const { id } = req.params;
-    
+
     user
       .remove(id)
       .then(User => {
@@ -162,4 +162,35 @@ module.exports.forgotDigit = {
         next(err);
       });
   }
-}
+};
+
+module.exports.forgotPassword = {
+  Validate: validate.forgotPassword,
+  handler: (req, res, next) => {
+    const { email } = req.body;
+    user
+      .forgotPassword(email)
+      .then(User => {
+        res.status(200).send(User);
+      })
+      .catch(err => {
+        next(err);
+      });
+  }
+};
+
+module.exports.resetPassword = {
+  Validate: validate.resetPassword,
+  handler: (req, res, next) => {
+    const { password } = req.body;
+    const { email } = req.decoded;
+    user
+      .resetPassword(email, password)
+      .then(User => {
+        res.status(200).send(User);
+      })
+      .catch(err => {
+        next(err);
+      });
+  }
+};

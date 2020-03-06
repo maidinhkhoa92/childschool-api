@@ -21,6 +21,8 @@ router.patch('/user/:id', Token, validate(user.deactive.Validate), user.deactive
 router.post('/user/compare-digit', Token, validate(user.compareDigit.Validate), user.compareDigit.handler);
 router.post('/user/change-digit', Token, validate(user.changeDigit.Validate), user.changeDigit.handler);
 router.post('/user/forgot-digit', Token, validate(user.forgotDigit.Validate), user.forgotDigit.handler);
+router.post('/user/forgot-password', validate(user.forgotPassword.Validate), user.forgotPassword.handler);
+router.post('/user/reset-password', Token, validate(user.resetPassword.Validate), user.resetPassword.handler);
 router.delete('/user/:id', Token, user.deactive.handler);
 
 // child

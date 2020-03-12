@@ -1,5 +1,4 @@
 const admin = require("../../../services/admin");
-const error = require("../../../helper/error");
 const validate = require("./validate");
 
 module.exports.init = {

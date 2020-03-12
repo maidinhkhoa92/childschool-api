@@ -10,13 +10,13 @@ module.exports = function (req, res, next) {
     }
     jwt.verify(token, 'token_token_miracles', function (err, decoded) {
       if (err) {
-        error(res.boom, { code: 9998 });
+        res.boom.unauthorized('Token is not valid')
       } else {
         req.decoded = decoded;
         next();
       }
     });
   } else {
-    error(res.boom, { code: 9997 });
+    res.boom.unauthorized('No token')
   }
 }

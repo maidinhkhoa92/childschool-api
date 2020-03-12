@@ -1,4 +1,4 @@
-const user = require("../../../services/user");
+const user = require("../../../crud/user");
 const error = require("../../../helper/error");
 const validate = require("./validate");
 
@@ -20,22 +20,21 @@ module.exports.create = {
 
 module.exports.list = {
   handler: (req, res, next) => {
-    let { paged, limit, type, directorId } = req.query;
-    paged = parseInt(paged);
-    limit = parseInt(limit);
+    let { city } = req.query;
 
     let params = {};
+    
+    params.typeOfUser = 'director';
 
-    if (type) {
-      params.typeOfUser = type;
+    if (city) {
+      params = {
+        ...params,
+        "profile.city": city
+      }
     }
-
-    if (directorId) {
-      params.directorId = directorId;
-    }
-
+    console.log(params)
     user
-      .list(paged, limit, params)
+      .list(params)
       .then(User => {
         res.status(200).send(User);
       })
@@ -68,21 +67,6 @@ module.exports.update = {
 
     user
       .update(id, body)
-      .then(User => {
-        res.status(200).send(User);
-      })
-      .catch(err => {
-        next(err);
-      });
-  }
-};
-
-module.exports.delete = {
-  handler: (req, res, next) => {
-    const { id } = req.params;
-
-    user
-      .remove(id)
       .then(User => {
         res.status(200).send(User);
       })

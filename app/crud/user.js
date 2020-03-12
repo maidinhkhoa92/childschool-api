@@ -5,7 +5,7 @@ const transporter = require("../config/nodemailer");
 const _ = require("lodash");
 const mailTemplate = require("../helper/email");
 
-const create = body => {
+module.exports.create = body => {
   return new Promise((resolve, reject) => {
     user.create(body, function(err, data) {
       if (err) {
@@ -42,18 +42,9 @@ const create = body => {
   });
 };
 
-const list = (paged, limit, params = {}) => {
+module.exports.list = (params = {}) => {
   return new Promise((resolve, reject) => {
     var query = user.find(params);
-
-    if (limit) {
-      query = query.limit(limit);
-    }
-
-    if (paged) {
-      const skip = paged * limit;
-      query = query.skip(skip);
-    }
 
     query.sort({ date: -1 }).exec(function(err, data) {
       if (err) {
@@ -62,38 +53,15 @@ const list = (paged, limit, params = {}) => {
       if (data === null) {
         reject({ code: 10000 });
       }
-      user.count({}, function(err, count) {
-        const result = {
-          paged: paged,
-          limit: limit,
-          total: count,
-          data: _.map(data, item => {
-            return convertData(item);
-          })
-        };
-        resolve(result);
+      const result = _.map(data, item => {
+        return convertData(item);
       });
+      resolve(result);
     });
   });
 };
 
-const update = (id, body) => {
-  return new Promise((resolve, reject) => {
-    const query = {
-      _id: id
-    };
-
-    user.findOneAndUpdate(query, body, { new: true }, function(err, data) {
-      if (err) {
-        reject(err);
-      }
-
-      resolve(convertData(data));
-    });
-  });
-};
-
-const detail = id => {
+module.exports.detail = id => {
   return new Promise((resolve, reject) => {
     user.findById(id, (err, data) => {
       if (err) {
@@ -107,16 +75,6 @@ const detail = id => {
   });
 };
 
-const remove = id => {
-  return new Promise((resolve, reject) => {
-    user.remove({ _id: id }, function(err) {
-      if (err) {
-        reject(err);
-      }
-      resolve({ status: "done" });
-    });
-  });
-};
 
 const convertData = (data, password = true) => {
   var result = data;
@@ -133,12 +91,4 @@ const convertData = (data, password = true) => {
   delete result._id;
   delete result.__v;
   return result;
-};
-
-module.exports = {
-  create,
-  list,
-  update,
-  detail,
-  remove
 };

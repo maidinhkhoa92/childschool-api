@@ -7,38 +7,35 @@ const mailTemplate = require("../helper/email");
 
 module.exports.create = body => {
   return new Promise((resolve, reject) => {
-    user.create(body, function(err, data) {
-      if (err) {
-        reject(err);
-        return;
+    user.findOne({email: body.email}, function(e, data) {
+      if(data) {
+        reject({ code: 8});
+          return;
       }
-
-      let mailOptions = {
-        from: "admin@gmail.com",
-        to: data.email,
-        subject: mailTemplate.director.subject,
-        html: mailTemplate.director.content
-      };
-
-      if (data.typeOfUser === "staff") {
-        mailOptions.subject = mailTemplate.staff.subject;
-        mailOptions.html = mailTemplate.staff.content;
-      }
-
-      if (data.typeOfUser === "family") {
-        mailOptions.subject = mailTemplate.family.subject;
-        mailOptions.html = mailTemplate.family.content;
-      }
-
-      transporter.sendMail(mailOptions, function(error, info) {
+      user.create(body, function(err, data) {
         if (err) {
-          reject(error);
+          reject(err);
           return;
         }
-
-        resolve(convertData(data));
+  
+        let mailOptions = {
+          from: "admin@gmail.com",
+          to: data.email,
+          subject: mailTemplate.director.subject,
+          html: mailTemplate.director.content
+        };
+  
+        transporter.sendMail(mailOptions, function(error, info) {
+          if (error) {
+            reject({code: 11});
+            return;
+          }
+  
+          resolve(convertData(data));
+        });
       });
-    });
+    })
+    
   });
 };
 

@@ -12,7 +12,6 @@ module.exports = {
     body: {
       email: Joi.string().email().required(),
       profile: Joi.object().required(),
-      typeOfUser: Joi.string().required().valid('director', 'staff', 'family'),
     }
   },
 }

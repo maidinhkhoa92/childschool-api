@@ -6,7 +6,7 @@ module.exports.create = {
   Validate: validate.create,
   handler: (req, res, next) => {
     const body = req.body;
-
+    body.typeOfUser = 'director';
     user
       .create(body)
       .then(User => {
@@ -32,7 +32,6 @@ module.exports.list = {
         "profile.city": city
       }
     }
-    console.log(params)
     user
       .list(params)
       .then(User => {

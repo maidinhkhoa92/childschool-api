@@ -1,5 +1,6 @@
 const error_data = require("./error.json");
 module.exports = function(err, req, res, next) {
+  console.log(err)
   if (err.name === "ValidationError") {
     if (
       err.errors[0].messages[0] === '"secondTeacher" contains an invalid value'

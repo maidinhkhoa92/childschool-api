@@ -4,6 +4,7 @@ const user = require("../models/user");
 const transporter = require("../config/nodemailer");
 const _ = require("lodash");
 const mailTemplate = require("../helper/email");
+const child = require("../models/child");
 
 module.exports.create = body => {
   return new Promise((resolve, reject) => {
@@ -72,6 +73,33 @@ module.exports.detail = id => {
   });
 };
 
+module.exports.update = (id, body) => {
+  return new Promise((resolve, reject) => {
+    const query = {
+      _id: id
+    };
+
+    user.findOneAndUpdate(query, body, { new: true }, function(err, data) {
+      if (err) {
+        reject(err);
+      }
+
+      resolve(convertData(data));
+    });
+  });
+};
+
+module.exports.countChild = (director_id) => {
+  return new Promise((resolve, reject) => {
+    child.count({ directorId: director_id }, function(err, data) {
+      if (err) {
+        reject(err);
+      }
+
+      resolve(data);
+    });
+  });
+}
 
 const convertData = (data, password = true) => {
   var result = data;

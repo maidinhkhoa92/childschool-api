@@ -59,15 +59,29 @@ module.exports.detail = {
 };
 
 module.exports.update = {
-  Validate: validate.create,
+  Validate: validate.update,
   handler: (req, res, next) => {
     const { body } = req;
     const { id } = req.params;
-
+    
     user
       .update(id, body)
       .then(User => {
         res.status(200).send(User);
+      })
+      .catch(err => {
+        next(err);
+      });
+  }
+};
+
+module.exports.count = {
+  handler: (req, res, next) => {
+    const { id } = req.params;
+    user
+      .countChild(id)
+      .then(count => {
+        res.status(200).send({count});
       })
       .catch(err => {
         next(err);

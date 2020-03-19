@@ -33,6 +33,13 @@ const schema = new Schema({
 		required: true,
 		default: false,
 	},
+	settings: {
+		current: { type: Number, default: 0 },
+		before: { type: Number, default: 0 },
+		paymentMethod: { type: String, default: '' },
+		note: { type: String, default: ''},
+		total: { type: Number, default: 0 }
+	}
 })
 
 schema.plugin(timestamp, {

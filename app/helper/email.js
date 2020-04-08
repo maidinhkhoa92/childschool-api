@@ -15,7 +15,7 @@ module.exports.family = {
 };
 
 module.exports.director = {
-  subject: "Mírate esta novedosa web",
+  subject: "Bienvenid@ a Ontább",
   content: `
     <p>Hola,<br/> Si has recibido este email es porque eres Director o Responsable de un centro de educación infantil. Sigue el siguiente link para que completes el registro y puedas crear tu centro.</p>
     <a href="https://www.myontabb.com/register">https://www.myontabb.com/register</a>

@@ -26,4 +26,10 @@ module.exports = {
       }
     }
   },
+  remove: {
+    options: { allowUnknownBody: false },
+    body: {
+      status: Joi.boolean(),
+    }
+  }
 }

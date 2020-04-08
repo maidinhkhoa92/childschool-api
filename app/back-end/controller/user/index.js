@@ -75,6 +75,23 @@ module.exports.update = {
   }
 };
 
+module.exports.remove = {
+  Validate: validate.remove,
+  handler: (req, res, next) => {
+    const { id } = req.params;
+    const { body } = req;
+    
+    user
+      .update(id, body)
+      .then(User => {
+        res.status(200).send(User);
+      })
+      .catch(err => {
+        next(err);
+      });
+  }
+};
+
 module.exports.count = {
   handler: (req, res, next) => {
     const { id } = req.params;

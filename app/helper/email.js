@@ -17,8 +17,8 @@ module.exports.family = {
 module.exports.director = {
   subject: "Mírate esta novedosa web",
   content: `
-    <p>Hola, te recomiendo usar OntáBb pues es una novedosa web para mejorar la interacción entre padres y guarderías. A los padres les permite conocer mejor el día de sus peques y a los trabajadores de centros les ahorra un montón de trabajo y organiza su día a día.</p>
-    <p>Conóceles más en el siguiente link <a href="www.myontabb.com">www.myontabb.com</a>
+    <p>Hola,<br/> Si has recibido este email es porque eres Director o Responsable de un centro de educación infantil. Sigue el siguiente link para que completes el registro y puedas crear tu centro.</p>
+    <a href="https://www.myontabb.com/register">https://www.myontabb.com/register</a>
     <p>Un saludo.</p>
     `
 };

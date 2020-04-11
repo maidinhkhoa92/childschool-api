@@ -10,7 +10,7 @@
     "method": "badRequest"
   },
   "4": {
-    "msg": "Contraseña y Confirmar contraseña no coinciden",
+    "msg": "Las contraseñas no coinciden",
     "method": "unauthorized"
   },
   "5": {

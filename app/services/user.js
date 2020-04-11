@@ -163,9 +163,9 @@ const forgotDigit = email => {
       Math.floor(Math.random() * 10)
     ];
     let mailOptions = {
-      from: "admin@gmail.com",
+      from: "info@myontabb.com",
       to: email,
-      subject: "Reset Digit",
+      subject: mailTemplate.forgot.subject,
       html: mailTemplate.forgot.content(JSON.stringify(digit))
     };
     user.findOne({ email: email }, function(err, data) {

@@ -21,7 +21,7 @@ module.exports = {
         current: Joi.number().required(),
         before: Joi.number().required(),
         paymentMethod: Joi.string().required(),
-        note: Joi.string(),
+        note: Joi.string().allow("").optional(),
         total: Joi.number()
       }
     }

@@ -32,13 +32,13 @@ module.exports.forgot = {
 };
 
 module.exports.contact = {
-  subject: "New Contact",
+  subject: "Nuevo contacto",
   content: content => `
-    <p>Email: ${content.email}</p>
-    <p>First name: ${content.firstName}</p>
-    <p>Last name: ${content.lastName}</p>
-    <p>Telephone: ${content.telephone}</p>
-    <p>Type: ${content.typeOfUser}</p>
+    <p>Correo electrónico: ${content.email}</p>
+    <p>Nombre: ${content.firstName}</p>
+    <p>Apellido: ${content.lastName}</p>
+    <p>Teléfono: ${content.telephone}</p>
+    <p>Tipo: ${content.typeOfUser}</p>
   `
 };
 

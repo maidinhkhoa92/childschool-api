@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const error = require('./error');
+const User = require('../services/user');
 
 module.exports = function (req, res, next) {
   var token = req.headers['x-access-token'] || req.headers['authorization'];
@@ -13,7 +14,11 @@ module.exports = function (req, res, next) {
         res.boom.unauthorized('Token is not valid')
       } else {
         req.decoded = decoded;
-        next();
+        User.detail(req.decoded.id).then(() => {
+          next();
+        }).catch(() => {
+          res.status(400).send({ shouldLogout: true })
+        })
       }
     });
   } else {

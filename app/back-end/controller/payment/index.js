@@ -12,6 +12,19 @@ module.exports.create = (req, res, next) => {
     });
 }
 
+module.exports.update = (req, res, next) => {
+  const { id } = req.params;
+  const body = req.body;
+  Payment
+    .update(id, body)
+    .then(data => {
+      res.status(200).send(data);
+    })
+    .catch(err => {
+      next(err);
+    });
+}
+
 module.exports.list = (req, res, next) => {
   let { director, startDate, endDate } = req.query;
 

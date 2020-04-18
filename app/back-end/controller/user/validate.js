@@ -17,6 +17,13 @@ module.exports = {
   update: {
     options: { allowUnknownBody: false },
     body: {
+      email: Joi.string().email().required(),
+      profile: Joi.object().required(),
+    }
+  },
+  updateSetting: {
+    options: { allowUnknownBody: false },
+    body: {
       settings: {
         current: Joi.number().required(),
         before: Joi.number().required(),
@@ -26,7 +33,7 @@ module.exports = {
       }
     }
   },
-  remove: {
+  updateStatus: {
     options: { allowUnknownBody: false },
     body: {
       status: Joi.boolean(),

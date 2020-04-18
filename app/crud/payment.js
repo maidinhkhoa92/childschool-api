@@ -20,7 +20,7 @@ module.exports.list = (params = {}) => {
   return new Promise((resolve, reject) => {
     var query = Payment.find(params);
 
-    query.sort({ created_at: -1 }).exec(function(err, data) {
+    query.populate('director').sort({ created_at: -1 }).exec(function(err, data) {
       if (err) {
         reject(err);
       }
@@ -31,6 +31,22 @@ module.exports.list = (params = {}) => {
         return convertData(item);
       });
       resolve(result);
+    });
+  });
+};
+
+module.exports.update = (id, body) => {
+  return new Promise((resolve, reject) => {
+    const query = {
+      _id: id
+    };
+
+    Payment.findOneAndUpdate(query, body, { new: true, populate: 'director' }, function(err, data) {
+      if (err) {
+        reject(err);
+      }
+
+      resolve(convertData(data));
     });
   });
 };

@@ -68,6 +68,7 @@ module.exports.detail = id => {
       if (data === null) {
         reject({ code: 10000 });
       }
+      
       resolve(convertData(data));
     });
   });
@@ -88,6 +89,18 @@ module.exports.update = (id, body) => {
     });
   });
 };
+
+module.exports.remove = (id) => {
+  return new Promise((resolve, reject) => {
+    user.remove({_id: id}, function (err) {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve({status: 'done'});
+    });
+  })
+}
 
 module.exports.countChild = (director_id) => {
   return new Promise((resolve, reject) => {

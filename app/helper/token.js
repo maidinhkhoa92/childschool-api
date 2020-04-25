@@ -14,11 +14,16 @@ module.exports = function (req, res, next) {
         res.boom.unauthorized('Token is not valid')
       } else {
         req.decoded = decoded;
-        User.detail(req.decoded.id).then(() => {
+        if (decoded.type === 'administrator') {
           next();
-        }).catch(() => {
-          res.status(400).send({ shouldLogout: true })
-        })
+        } else {
+          User.detail(req.decoded.id).then(() => {
+            next();
+          }).catch(() => {
+            res.status(400).send({ shouldLogout: true })
+          })
+        }
+        
       }
     });
   } else {

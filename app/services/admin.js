@@ -44,7 +44,7 @@ module.exports.login = (username, password) => {
   
             delete Admin.password;
             const data = {
-              type: Admin.typeOfUser,
+              type: 'administrator',
               email: Admin.email,
               id: Admin._id
             };

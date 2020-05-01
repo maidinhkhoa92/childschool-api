@@ -1,15 +1,14 @@
 const Payment = require("../../../crud/payment");
 
-module.exports.create = (req, res, next) => {
+module.exports.create = async (req, res, next) => {
   const body = req.body;
-  Payment
-    .create(body)
-    .then(data => {
-      res.status(200).send(data);
-    })
-    .catch(err => {
-      next(err);
-    });
+  try {
+    const data = await Payment.create(body);
+    const Detail = await Payment.detail(data.id);
+    res.status(200).send(Detail);
+  } catch(err) {
+    next(err);
+  }
 }
 
 module.exports.update = (req, res, next) => {

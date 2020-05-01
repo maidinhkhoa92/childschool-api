@@ -51,6 +51,21 @@ module.exports.update = (id, body) => {
   });
 };
 
+module.exports.detail = id => {
+  return new Promise((resolve, reject) => {
+    Payment.findById(id).populate('director').exec(function(err, data) {
+      if (err) {
+        reject(err);
+      }
+      if (data === null) {
+        reject({ code: 10000 });
+      }
+      resolve(convertData(data));
+    });
+    
+  });
+};
+
 const convertData = (data) => {
   var result = data;
   if (data === null || data === undefined) {

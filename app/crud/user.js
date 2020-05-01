@@ -8,35 +8,35 @@ const child = require("../models/child");
 
 module.exports.create = body => {
   return new Promise((resolve, reject) => {
-    user.findOne({email: body.email}, function(e, data) {
-      if(data) {
-        reject({ code: 8});
-          return;
+    user.findOne({ email: body.email }, function (e, data) {
+      if (data) {
+        reject({ code: 8 });
+        return;
       }
-      user.create(body, function(err, data) {
+      user.create(body, function (err, data) {
         if (err) {
           reject(err);
           return;
         }
-  
+
         let mailOptions = {
           from: "admin@gmail.com",
           to: data.email,
           subject: mailTemplate.director.subject,
           html: mailTemplate.director.content
         };
-  
-        transporter.sendMail(mailOptions, function(error, info) {
+
+        transporter.sendMail(mailOptions, function (error, info) {
           if (error) {
-            reject({code: 11});
+            reject({ code: 11 });
             return;
           }
-  
+
           resolve(convertData(data));
         });
       });
     })
-    
+
   });
 };
 
@@ -44,7 +44,7 @@ module.exports.list = (params = {}) => {
   return new Promise((resolve, reject) => {
     var query = user.find(params);
 
-    query.sort({ date: -1 }).exec(function(err, data) {
+    query.sort({ date: -1 }).exec(function (err, data) {
       if (err) {
         reject(err);
       }
@@ -68,7 +68,7 @@ module.exports.detail = id => {
       if (data === null) {
         reject({ code: 10000 });
       }
-      
+
       resolve(convertData(data));
     });
   });
@@ -80,7 +80,7 @@ module.exports.update = (id, body) => {
       _id: id
     };
 
-    user.findOneAndUpdate(query, body, { new: true }, function(err, data) {
+    user.findOneAndUpdate(query, body, { new: true }, function (err, data) {
       if (err) {
         reject(err);
       }
@@ -92,19 +92,19 @@ module.exports.update = (id, body) => {
 
 module.exports.remove = (id) => {
   return new Promise((resolve, reject) => {
-    user.remove({_id: id}, function (err) {
+    user.remove({ _id: id }, function (err) {
       if (err) {
         reject(err);
         return;
       }
-      resolve({status: 'done'});
+      resolve({ status: 'done' });
     });
   })
 }
 
 module.exports.countChild = (director_id) => {
   return new Promise((resolve, reject) => {
-    child.count({ directorId: director_id }, function(err, data) {
+    child.count({ directorId: director_id }, function (err, data) {
       if (err) {
         reject(err);
       }
@@ -113,6 +113,34 @@ module.exports.countChild = (director_id) => {
     });
   });
 }
+
+module.exports.resend = email => {
+  return new Promise((resolve, reject) => {
+    user.findOne({ email: email }, function (e, data) {
+      if (!data) {
+        reject({ code: 8 });
+        return;
+      }
+
+      let mailOptions = {
+        from: "admin@gmail.com",
+        to: email,
+        subject: mailTemplate.director.subject,
+        html: mailTemplate.director.content
+      };
+
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          reject({ code: 11 });
+          return;
+        }
+
+        resolve(convertData(data));
+      });
+    })
+
+  });
+};
 
 const convertData = (data, password = true) => {
   var result = data;

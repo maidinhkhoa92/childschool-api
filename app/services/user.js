@@ -408,7 +408,7 @@ const forgotPassword = email => {
         return;
       }
 
-      const token = jwt.sign({ email: data.email }, "token_token_miracles");
+      const token = jwt.sign({ email: data.email, id: data._id }, "token_token_miracles");
       const link = parameters.changePasswordUrl + token;
 
       let mailOptions = {
@@ -443,7 +443,14 @@ const resetPassword = (email, password) => {
       }
       data.password = bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
       data.save();
-      resolve(convertData(data));
+
+      const dataToken = {
+        type: data.typeOfUser,
+        email: data.email,
+        id: data._id
+      };
+      const token = jwt.sign(dataToken, "token_token_miracles");
+      resolve({...convertData(data), token: token});
     });
   });
 };

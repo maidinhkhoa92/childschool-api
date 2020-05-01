@@ -21,6 +21,7 @@ router.put("/setting/:id", Token, validate(userValidate.updateSetting), user.upd
 router.get("/user/:id/child", Token, user.count);
 router.patch("/user/:id", Token, validate(userValidate.updateStatus), user.updateStatus);
 router.delete("/user/:id", Token, user.remove);
+router.post("/resend", Token, user.resend);
 
 const payment = require("./controller/payment");
 const paymentValidate = require("./controller/payment/validate");

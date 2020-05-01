@@ -14,14 +14,13 @@ module.exports.create = async (req, res, next) => {
 module.exports.update = (req, res, next) => {
   const { id } = req.params;
   const body = req.body;
-  Payment
-    .update(id, body)
-    .then(data => {
-      res.status(200).send(data);
-    })
-    .catch(err => {
-      next(err);
-    });
+  try {
+    const data = await Payment.update(id, body);
+    const Detail = await Payment.detail(data.id);
+    res.status(200).send(Detail);
+  } catch(err) {
+    next(err);
+  }
 }
 
 module.exports.list = (req, res, next) => {

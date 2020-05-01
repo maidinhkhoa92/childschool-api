@@ -38,6 +38,10 @@
     "msg": "Email not found",
     "method": "badRequest"
   },
+  "12": {
+    "msg": "La cuenta ya existe",
+    "method": "badRequest"
+  },
   "9997": {
     "msg": "No token",
     "method": "unauthorized"

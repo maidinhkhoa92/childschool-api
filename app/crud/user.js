@@ -10,7 +10,7 @@ module.exports.create = body => {
   return new Promise((resolve, reject) => {
     user.findOne({ email: body.email }, function (e, data) {
       if (data) {
-        reject({ code: 8 });
+        reject({ code: 12 });
         return;
       }
       user.create(body, function (err, data) {

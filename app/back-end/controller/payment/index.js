@@ -11,7 +11,7 @@ module.exports.create = async (req, res, next) => {
   }
 }
 
-module.exports.update = (req, res, next) => {
+module.exports.update = async (req, res, next) => {
   const { id } = req.params;
   const body = req.body;
   try {

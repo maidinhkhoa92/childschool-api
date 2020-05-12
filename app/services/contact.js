@@ -8,10 +8,6 @@ const parameters = require("../config/parameters.json");
 
 const create = body => {
   return new Promise((resolve, reject) => {
-    contact.create(body, function(err, data) {
-      if (err) {
-        reject(err);
-      }
       let mailOptions = {
         from: "admin@gmail.com",
         to: parameters.adminMail,
@@ -25,9 +21,8 @@ const create = body => {
           return;
         }
 
-        resolve(convertData(data));
+        resolve(body);
       });
-    });
   });
 };
 

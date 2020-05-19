@@ -92,13 +92,20 @@ module.exports.update = (id, body) => {
 
 module.exports.remove = (id) => {
   return new Promise((resolve, reject) => {
-    user.remove({ _id: id }, function (err) {
-      if (err) {
-        reject(err);
+    user.deleteMany({ directorId: id }, e => {
+      if (e) {
+        reject(e);
         return;
       }
-      resolve({ status: 'done' });
-    });
+      user.remove({ _id: id }, function (err) {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve({ status: 'done' });
+      });
+    })
+      
   })
 }
 

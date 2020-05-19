@@ -17,8 +17,19 @@ module.exports = function (req, res, next) {
         if (decoded.type === 'administrator') {
           next();
         } else {
-          User.detail(req.decoded.id).then(() => {
-            next();
+          // check if user is removed
+          User.detail(req.decoded.id).then(async user => {
+            // Check if agency is removed or deactived
+            if (user.typeOfUser !== 'director') {
+              const director = await User.detail(user.directorId)
+              if (director && director.status === true) {
+                next();
+              } else {
+                res.status(400).send({ shouldLogout: true })
+              }
+            } else {
+              next();
+            }
           }).catch(() => {
             res.status(400).send({ shouldLogout: true })
           })

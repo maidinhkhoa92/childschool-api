@@ -13,7 +13,7 @@ const create = (body, directorId) => {
     if (directorId) {
       body.directorId = directorId;
     }
-    user.create(body, function(err, data) {
+    user.create(body, function (err, data) {
       if (err) {
         reject(err);
         return;
@@ -36,7 +36,7 @@ const create = (body, directorId) => {
         mailOptions.html = mailTemplate.family.content;
       }
 
-      transporter.sendMail(mailOptions, function(error, info) {
+      transporter.sendMail(mailOptions, function (error, info) {
         if (err) {
           reject(error);
           return;
@@ -54,7 +54,7 @@ const updatePassword = (email, password, confirm) => {
       reject({ code: 4 });
       return;
     }
-    user.findOne({ email: email }, function(err, User) {
+    user.findOne({ email: email }, function (err, User) {
       if (err) {
         reject(err);
         return;
@@ -81,7 +81,7 @@ const updatePassword = (email, password, confirm) => {
 const login = (email, password) => {
   return new Promise((resolve, reject) => {
     user
-      .findOne({ email: email }, function(error, User) {
+      .findOne({ email: email }, (error, User) => {
         if (error) {
           reject(error);
           return;
@@ -102,25 +102,33 @@ const login = (email, password) => {
           return;
         }
 
-        bcrypt.compare(password, User.password, (err, resonse) => {
-          if (err) {
-            reject(err);
-            return;
-          }
-          if (!resonse) {
-            reject({ code: 9999 });
-            return;
-          }
-
-          delete User.password;
-          const data = {
-            type: User.typeOfUser,
-            email: User.email,
-            id: User._id
-          };
-          const token = jwt.sign(data, "token_token_miracles");
-          resolve({ ...convertData(User), token: token });
-        });
+        if (User.type !== 'director') {
+          detail(User.directorId).then(Director => {
+            if (Director && Director.status == true) {
+              bcrypt.compare(password, User.password, (err, resonse) => {
+                if (err) {
+                  reject(err);
+                  return;
+                }
+                if (!resonse) {
+                  reject({ code: 9999 });
+                  return;
+                }
+  
+                delete User.password;
+                const data = {
+                  type: User.typeOfUser,
+                  email: User.email,
+                  id: User._id
+                };
+                const token = jwt.sign(data, "token_token_miracles");
+                resolve({ ...convertData(User), token: token });
+              });
+            } else {
+              reject({ code: 6 });
+            }
+          }).catch(() => reject({ code: 6 }));
+        }
       })
       .catch(err => {
         reject({ code: 9999 });
@@ -130,7 +138,7 @@ const login = (email, password) => {
 
 const updateDigit = (id, digit) => {
   return new Promise((resolve, reject) => {
-    user.findById(id, function(error, User) {
+    user.findById(id, function (error, User) {
       if (error) {
         reject(error);
         return;
@@ -168,13 +176,13 @@ const forgotDigit = email => {
       subject: mailTemplate.forgot.subject,
       html: mailTemplate.forgot.content(JSON.stringify(digit))
     };
-    user.findOne({ email: email }, function(err, data) {
+    user.findOne({ email: email }, function (err, data) {
       if (err) {
         reject(err);
         return;
       }
 
-      transporter.sendMail(mailOptions, function(error, info) {
+      transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
           reject(error);
           return;
@@ -189,7 +197,7 @@ const forgotDigit = email => {
 
 const compareDigit = (id, digit) => {
   return new Promise((resolve, reject) => {
-    user.findById(id, function(error, User) {
+    user.findById(id, function (error, User) {
       if (error) {
         reject(error);
         return;
@@ -221,7 +229,7 @@ const update = (id, body) => {
       _id: id
     };
 
-    user.findOneAndUpdate(query, body, { new: true }, function(err, data) {
+    user.findOneAndUpdate(query, body, { new: true }, function (err, data) {
       if (err) {
         reject(err);
       }
@@ -244,14 +252,14 @@ const list = (paged, limit, params = {}) => {
       query = query.skip(skip);
     }
 
-    query.sort({ date: -1 }).exec(function(err, data) {
+    query.sort({ date: -1 }).exec(function (err, data) {
       if (err) {
         reject(err);
       }
       if (data === null) {
         reject({ code: 10000 });
       }
-      user.count({}, function(err, count) {
+      user.count({}, function (err, count) {
         const result = {
           paged: paged,
           limit: limit,
@@ -268,7 +276,7 @@ const list = (paged, limit, params = {}) => {
 
 const detail = id => {
   return new Promise((resolve, reject) => {
-    user.findById(id, function(err, data) {
+    user.findById(id, function (err, data) {
       if (err) {
         reject(err);
       }
@@ -282,7 +290,7 @@ const detail = id => {
 
 const remove = id => {
   return new Promise((resolve, reject) => {
-    user.remove({ _id: id }, function(err) {
+    user.remove({ _id: id }, function (err) {
       if (err) {
         reject(err);
       }
@@ -293,7 +301,7 @@ const remove = id => {
 
 const findByEmailAndCreate = (body, directorId = null) => {
   return new Promise((resolve, reject) => {
-    user.findOne({ email: body.email }, function(err, data) {
+    user.findOne({ email: body.email }, function (err, data) {
       if (err) {
         reject(err);
         return;
@@ -322,7 +330,7 @@ const center = (id, type = null) => {
       query = query.where("typeOfUser").equals(type);
     }
 
-    query.exec(function(err, data) {
+    query.exec(function (err, data) {
       if (err) {
         reject(err);
         return;
@@ -345,7 +353,7 @@ const center = (id, type = null) => {
 
 const changeDigit = (id, oldDigit, newDigit, confirmDigit) => {
   return new Promise((resolve, reject) => {
-    user.findById(id, function(error, User) {
+    user.findById(id, function (error, User) {
       if (error) {
         reject(error);
         return;
@@ -397,7 +405,7 @@ const convertData = (data, password = true) => {
 
 const forgotPassword = email => {
   return new Promise((resolve, reject) => {
-    user.findOne({ email: email }, function(err, data) {
+    user.findOne({ email: email }, function (err, data) {
       if (err) {
         reject(err);
         return;
@@ -417,7 +425,7 @@ const forgotPassword = email => {
         subject: mailTemplate.forgot.subject,
         html: mailTemplate.forgot.content(link)
       };
-      transporter.sendMail(mailOptions, function(error, info) {
+      transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
           reject(error);
           return;
@@ -431,7 +439,7 @@ const forgotPassword = email => {
 
 const resetPassword = (email, password) => {
   return new Promise((resolve, reject) => {
-    user.findOne({ email: email }, function(err, data) {
+    user.findOne({ email: email }, function (err, data) {
       if (err) {
         reject(err);
         return;
@@ -450,7 +458,7 @@ const resetPassword = (email, password) => {
         id: data._id
       };
       const token = jwt.sign(dataToken, "token_token_miracles");
-      resolve({...convertData(data), token: token});
+      resolve({ ...convertData(data), token: token });
     });
   });
 };
@@ -463,7 +471,7 @@ const subcribe = text => {
       subject: "New Subcribe",
       html: text
     };
-    transporter.sendMail(mailOptions, function(error, info) {
+    transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
         reject(error);
         return;

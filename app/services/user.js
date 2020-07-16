@@ -101,10 +101,11 @@ const login = (email, password) => {
           reject({ code: 6 });
           return;
         }
-
-        if (User.type !== 'director') {
+        console.log(User)
+        if (User.typeOfUser !== 'director') {
+          console.log(1)
           detail(User.directorId).then(Director => {
-            if (Director && Director.status == true) {
+            if (Director && Director.status) {
               bcrypt.compare(password, User.password, (err, resonse) => {
                 if (err) {
                   reject(err);
@@ -128,6 +129,27 @@ const login = (email, password) => {
               reject({ code: 6 });
             }
           }).catch(() => reject({ code: 6 }));
+        } else {
+          console.log(2)
+          bcrypt.compare(password, User.password, (err, resonse) => {
+            if (err) {
+              reject(err);
+              return;
+            }
+            if (!resonse) {
+              reject({ code: 9999 });
+              return;
+            }
+
+            delete User.password;
+            const data = {
+              type: User.typeOfUser,
+              email: User.email,
+              id: User._id
+            };
+            const token = jwt.sign(data, "token_token_miracles");
+            resolve({ ...convertData(User), token: token });
+          });
         }
       })
       .catch(err => {

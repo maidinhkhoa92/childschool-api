@@ -14,7 +14,12 @@ module.exports = {
     body: {
       email: Joi.string()
         .email()
-        .required('Completa todos los campos'),
+        .required()
+        .error(() => {
+          return {
+            message: `Completa todos los campos`,
+          };
+        }),
       profile: Joi.object().required()
     }
   },

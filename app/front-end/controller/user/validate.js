@@ -14,7 +14,7 @@ module.exports = {
     body: {
       email: Joi.string()
         .email()
-        .required(),
+        .required('Completa todos los campos'),
       profile: Joi.object().required()
     }
   },

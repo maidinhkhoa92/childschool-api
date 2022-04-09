@@ -25,7 +25,7 @@
     "joi": "^13.0.2",
     "jsonwebtoken": "^8.1.0",
     "lodash": "^4.17.15",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "mongoose": "^4.13.2",
     "mongoose-duplicate-key-error": "^1.0.2",
     "mongoose-timestamp-plugin": "0.0.1",
